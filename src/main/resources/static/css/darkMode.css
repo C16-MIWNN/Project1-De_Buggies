@@ -1,0 +1,64 @@
+.switch-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-label {
+    position: relative;
+    padding-left: 50px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1rem;
+    color: darkslategrey;
+}
+
+/* The slider */
+.switch-label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 20px;
+    background-color: grey;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+/* The circle */
+.switch-label::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+
+/* When checked */
+.switch-input:checked + .switch-label::before {
+    background-color: green;
+}
+
+.switch-input:checked + .switch-label::after {
+    transform: translate(22px, -50%);
+}
+
+/* Default text color for label */
+.switch-label {
+    color: darkslategrey; /* dark text for light mode */
+}
+
+/* When body has dark theme, make label text lighter */
+body[data-bs-theme="dark"] .switch-label {
+    color: lightgrey; /* light gray for dark mode */
+}
+
