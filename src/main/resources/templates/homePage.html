@@ -11,6 +11,8 @@
 <div class="container">
 <h1>All recipes will show up here</h1>
 
+<a th:href="@{/recipe/new}">Add new recipe</a>
+
 <table>
     <tr>
         <th>Name</th>
@@ -18,10 +20,10 @@
     </tr>
     <tr th:each="recipe : ${allRecipes}">
         <td th:text="${recipe.getName()}"></td>
-        <td th:action="@{'/recipe/recipeDetails/' + ${recipe.getRecipeId()}}" method="post">
-                <button type="submit">
+        <td th:action="@{'/recipe/recipeDetails/' + ${recipe.getRecipeId()}}">
+                <a role="button" class="btn" th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}">
                     Details
-                </button>
+                </a>
         </td>
     </tr>
 

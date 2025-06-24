@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -28,6 +30,13 @@ public class RecipeController {
         this.recipeRepository = recipeRepository;
     }
 
+    private String setupRecipeDetail(Model datamodel, Recipe recipeToShow, Recipe formRecipe) {
+        datamodel.addAttribute("recipe", recipeToShow);
+        datamodel.addAttribute("formRecipe", formRecipe);
+
+        return "RecipeDetails";
+    }
+
     @GetMapping({"/", "/homePage"})
     private String showHomePage(Model datamodel) {
         List<Recipe> allRecipes = recipeRepository.findAll();
@@ -37,13 +46,17 @@ public class RecipeController {
         return "homePage";
     }
 
-    @GetMapping("/recipeDetails/{recipeId}")
-    private String showRecipeDetails(@PathVariable ("recipeId") Long recipeId, Model datamodel)  {
+    @GetMapping("/recipe/detail/{recipeId}")
+    private String showRecipeDetails(@PathVariable("recipeId") Long recipeId, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
+        if (recipeOptional.isEmpty()) {
+            return "redirect:/homePage";
+        }
 
-
-        return "recipeDetails";
+        return setupRecipeDetail(datamodel, recipeOptional.get(), recipeOptional.get());
     }
+
 
     @GetMapping("/recipe/new")
     private String showNewRecipeForm(Model datamodel) {
