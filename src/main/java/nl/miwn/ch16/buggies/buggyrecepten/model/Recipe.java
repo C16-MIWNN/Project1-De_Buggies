@@ -2,6 +2,8 @@ package nl.miwn.ch16.buggies.buggyrecepten.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -18,8 +20,8 @@ public class Recipe {
     private String name;
     private String recipeSteps;
 
-    @ManyToMany
-    private Set<Ingredient> ingredients;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private Set<IngredientPerRecipe> ingredientsPerRecipe;
 
     public Long getRecipeId() {
         return recipeId;
@@ -43,13 +45,5 @@ public class Recipe {
 
     public void setRecipeSteps(String recipeSteps) {
         this.recipeSteps = recipeSteps;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
     }
 }
