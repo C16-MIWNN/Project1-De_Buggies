@@ -1,13 +1,13 @@
 package nl.miwn.ch16.buggies.buggyrecepten.model;
 
-/*
- * @Author: Joost Numan
- * zet hier wat het programma doet
- */
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
+/*
+ * @Author: Joost Numan
+ * This program describes an ingredient that can be used in recipes
+ */
 
 @Entity
 public class Ingredient {
@@ -16,8 +16,8 @@ public class Ingredient {
     private Long designId;
 
     private String name;
-    private Double hoeveelheid;
-    private String eenheid;
+    private Double quantity;
+    private String unit;
 
     public Long getDesignId() {
         return designId;
@@ -35,19 +35,19 @@ public class Ingredient {
         this.name = name;
     }
 
-    public Double getHoeveelheid() {
-        return hoeveelheid;
+    public Double getQuantity() {
+        return quantity;
     }
 
-    public void setHoeveelheid(Double hoeveelheid) {
-        this.hoeveelheid = hoeveelheid;
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 
-    public String getEenheid() {
-        return eenheid;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setEenheid(String eenheid) {
-        this.eenheid = eenheid;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

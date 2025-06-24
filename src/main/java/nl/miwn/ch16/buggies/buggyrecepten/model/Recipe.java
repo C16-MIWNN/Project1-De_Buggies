@@ -7,20 +7,20 @@ import java.util.Set;
 
 /*
  * @Author: Joost Numan
- * zet hier wat het programma doet
+ * This prgram describes a recipe that is used as the main entity of the website
  */
 
 @Entity
-public class Recept {
+public class Recipe {
 
     @Id @GeneratedValue
     private Long designId;
 
     private String name;
-    private List<String> stappen;
+    private List<String> recipeSteps;
 
     @ManyToMany
-    private Set<Ingredient> ingredienten;
+    private Set<Ingredient> ingredients;
 
     public Long getDesignId() {
         return designId;
@@ -38,19 +38,19 @@ public class Recept {
         this.name = name;
     }
 
-    public List<String> getStappen() {
-        return stappen;
+    public List<String> getRecipeSteps() {
+        return recipeSteps;
     }
 
-    public void setStappen(List<String> stappen) {
-        this.stappen = stappen;
+    public void setRecipeSteps(List<String> recipeSteps) {
+        this.recipeSteps = recipeSteps;
     }
 
-    public Set<Ingredient> getIngredienten() {
-        return ingredienten;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredienten(Set<Ingredient> ingredienten) {
-        this.ingredienten = ingredienten;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
