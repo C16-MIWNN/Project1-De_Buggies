@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,13 +48,9 @@ public class RecipeController {
     private String showRecipeDetails(@PathVariable("recipeId") Long recipeId, Model datamodel) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
-        if (recipeOptional.isEmpty()) {
-            return "redirect:/homePage";
-        }
-
-        return setupRecipeDetail(datamodel, recipeOptional.get(), recipeOptional.get());
+        return recipeOptional.map(recipe -> setupRecipeDetail(datamodel,
+                recipe, recipe)).orElse("redirect:/homePage");
     }
-
 
     @GetMapping("/recipe/new")
     private String showNewRecipeForm(Model datamodel) {
