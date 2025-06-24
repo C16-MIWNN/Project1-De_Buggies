@@ -13,18 +13,18 @@ import jakarta.persistence.Id;
 public class Ingredient {
 
     @Id @GeneratedValue
-    private Long designId;
+    private Long ingredientId;
 
     private String name;
     private Double quantity;
     private String unit;
 
-    public Long getDesignId() {
-        return designId;
+    public Long getIngredientId() {
+        return ingredientId;
     }
 
-    public void setDesignId(Long designId) {
-        this.designId = designId;
+    public void setIngredientId(Long designId) {
+        this.ingredientId = designId;
     }
 
     public String getName() {
