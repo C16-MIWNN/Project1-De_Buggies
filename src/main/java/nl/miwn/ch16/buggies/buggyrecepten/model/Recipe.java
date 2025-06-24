@@ -2,7 +2,6 @@ package nl.miwn.ch16.buggies.buggyrecepten.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
 
 /*
@@ -14,20 +13,20 @@ import java.util.Set;
 public class Recipe {
 
     @Id @GeneratedValue
-    private Long designId;
+    private Long recipeId;
 
     private String name;
-    private List<String> recipeSteps;
+    private String recipeSteps;
 
     @ManyToMany
     private Set<Ingredient> ingredients;
 
-    public Long getDesignId() {
-        return designId;
+    public Long getRecipeId() {
+        return recipeId;
     }
 
-    public void setDesignId(Long designId) {
-        this.designId = designId;
+    public void setRecipeId(Long designId) {
+        this.recipeId = designId;
     }
 
     public String getName() {
@@ -38,11 +37,11 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<String> getRecipeSteps() {
+    public String getRecipeSteps() {
         return recipeSteps;
     }
 
-    public void setRecipeSteps(List<String> recipeSteps) {
+    public void setRecipeSteps(String recipeSteps) {
         this.recipeSteps = recipeSteps;
     }
 
