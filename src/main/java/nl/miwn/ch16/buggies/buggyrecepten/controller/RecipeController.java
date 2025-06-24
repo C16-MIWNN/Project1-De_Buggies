@@ -32,7 +32,7 @@ public class RecipeController {
     private String showHomePage(Model datamodel) {
         List<Recipe> allRecipes = recipeRepository.findAll();
 
-
+        System.out.println("Dag Joost");
 
         datamodel.addAttribute("allRecipes", allRecipes);
 
