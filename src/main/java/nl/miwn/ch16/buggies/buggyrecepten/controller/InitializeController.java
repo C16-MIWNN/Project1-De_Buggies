@@ -1,7 +1,9 @@
 package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
 import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
+import nl.miwn.ch16.buggies.buggyrecepten.model.IngredientPerRecipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientPerRecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,12 +19,14 @@ import java.io.IOException;
 
 @Controller
 public class InitializeController {
-    private IngredientRepository ingredientRepository;
-    private RecipeRepository recipeRepository;
+    private final IngredientPerRecipeRepository ingredientPerRecipeRepository;
+    private final IngredientRepository ingredientRepository;
+    private final RecipeRepository recipeRepository;
 
-    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository) {
+    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
+        this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
     }
 
     @EventListener
@@ -35,6 +39,7 @@ public class InitializeController {
     private void initializeDB() {
         loadRecipes();
         loadIngredients();
+        loadIngredientsPerRecipe();
     }
 
     private void loadRecipes() {
@@ -43,8 +48,8 @@ public class InitializeController {
         Recipe pasta = new Recipe();
 
         eggs.setName("Egg");
-        toast.setName("toast");
-        pasta.setName("pasta");
+        toast.setName("Toast");
+        pasta.setName("Pasta");
 
         eggs.setRecipeSteps("cook egg");
         toast.setRecipeSteps("toast bread");
@@ -75,5 +80,21 @@ public class InitializeController {
         ingredientRepository.save(egg);
         ingredientRepository.save(bread);
         ingredientRepository.save(spaghetti);
+    }
+
+    private void loadIngredientsPerRecipe() {
+        IngredientPerRecipe eggsIngredient1 = new IngredientPerRecipe();
+        IngredientPerRecipe toastIngredient1 = new IngredientPerRecipe();
+        IngredientPerRecipe pastaIngredient1 = new IngredientPerRecipe();
+
+        eggsIngredient1.setIngredient(ingredientRepository.findByName("Egg").get());
+        toastIngredient1.setIngredient(ingredientRepository.findByName("Bread").get());
+        pastaIngredient1.setIngredient(ingredientRepository.findByName("Spaghetti").get());
+
+        eggsIngredient1.setRecipe(recipeRepository.findByName("Egg").get());
+        toastIngredient1.setRecipe(recipeRepository.findByName("Toast").get());
+        pastaIngredient1.setRecipe(recipeRepository.findByName("Pasta").get());
+
+
     }
 }

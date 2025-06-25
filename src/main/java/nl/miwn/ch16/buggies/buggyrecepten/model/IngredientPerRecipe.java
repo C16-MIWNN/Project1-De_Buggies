@@ -1,9 +1,6 @@
 package nl.miwn.ch16.buggies.buggyrecepten.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Controller;
 
 import java.util.Set;
@@ -20,10 +17,10 @@ public class IngredientPerRecipe {
     @Id @GeneratedValue
     private Long IngredientPerRecipeId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Ingredient ingredient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Recipe recipe;
 
     private String unitOfMeasurement;
