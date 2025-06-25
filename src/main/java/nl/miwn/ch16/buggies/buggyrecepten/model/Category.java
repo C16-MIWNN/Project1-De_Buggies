@@ -3,6 +3,10 @@ package nl.miwn.ch16.buggies.buggyrecepten.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marnix Ripke
@@ -16,6 +20,9 @@ public class Category {
     private Long CategoryId;
 
     private String name;
+
+    @ManyToMany
+    private List<Recipe> recipes = new ArrayList<>();
 
     public Long getCategoryId() {
         return CategoryId;
@@ -32,4 +39,14 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+
 }
