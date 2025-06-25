@@ -17,6 +17,7 @@ public class NewIngredientPerRecipeMapper {
 
         String[] ingredientQuantities = splitIngredientQuantities(newRecipeDTO.getIngredientNames());
         String[] ingredientUnits = splitIngredientUnits(newRecipeDTO.getIngredientUnitsOfMeasurement());
+        String[] ingredientNames = splitIngredientNames(newRecipeDTO.getIngredientNames());
 
         for (int i = 0; i < ingredientQuantities.length; i++) {
             IngredientPerRecipe newIngredientPerRecipe = new IngredientPerRecipe();

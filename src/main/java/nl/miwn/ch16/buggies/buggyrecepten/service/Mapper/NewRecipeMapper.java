@@ -16,10 +16,8 @@ public class NewRecipeMapper {
     public static Recipe fromDTO(NewRecipeDTO newRecipeDTO){
         Recipe recipe = new Recipe();
 
-        recipe.setName(newRecipeDTO.getRecipeName());
-        recipe.setRecipeSteps(newRecipeDTO.getRecipeSteps());
-
-
+//        recipe.setName(newRecipeDTO.getRecipeName());
+//        recipe.setRecipeSteps(newRecipeDTO.getRecipeSteps());
 
         return recipe;
     }

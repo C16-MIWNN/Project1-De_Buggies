@@ -18,11 +18,21 @@ public class Recipe {
     private String name;
     private String recipeSteps;
 
+    private String ingredients;
+
     @ManyToMany
     private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<IngredientPerRecipe> ingredientsPerRecipe;
+
+    public List<String> getListOfRecipeSteps() {
+        return this.recipeSteps.split(";");
+    }
+
+    public List<String> getListOfIngredients() {
+        return this.ingredients.split(";");
+    }
 
     public Long getRecipeId() {
         return recipeId;
@@ -56,4 +66,11 @@ public class Recipe {
         return categories;
     }
 
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
 }
