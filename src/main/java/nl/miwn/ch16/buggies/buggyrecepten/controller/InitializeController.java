@@ -73,7 +73,7 @@ public class InitializeController {
         bread.setQuantity(1.0);
         spaghetti.setQuantity(100.0);
 
-        egg.setUnit("");
+        egg.setUnit("zcs");
         bread.setUnit("slices");
         spaghetti.setUnit("grams");
 
@@ -95,6 +95,8 @@ public class InitializeController {
         toastIngredient1.setRecipe(recipeRepository.findByName("Toast").get());
         pastaIngredient1.setRecipe(recipeRepository.findByName("Pasta").get());
 
-
+        ingredientPerRecipeRepository.save(eggsIngredient1);
+        ingredientPerRecipeRepository.save(toastIngredient1);
+        ingredientPerRecipeRepository.save(pastaIngredient1);
     }
 }

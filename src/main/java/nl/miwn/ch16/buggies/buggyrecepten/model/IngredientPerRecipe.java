@@ -17,10 +17,10 @@ public class IngredientPerRecipe {
     @Id @GeneratedValue
     private Long IngredientPerRecipeId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Ingredient ingredient;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Recipe recipe;
 
     private String unitOfMeasurement;
