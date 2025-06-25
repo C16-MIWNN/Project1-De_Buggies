@@ -16,8 +16,6 @@ public class Ingredient {
     private Long ingredientId;
 
     private String name;
-    private Double quantity;
-    private String unit;
 
     public Long getIngredientId() {
         return ingredientId;
@@ -33,21 +31,5 @@ public class Ingredient {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 }

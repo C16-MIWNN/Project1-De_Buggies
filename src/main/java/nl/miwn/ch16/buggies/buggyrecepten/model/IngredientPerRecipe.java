@@ -1,9 +1,6 @@
 package nl.miwn.ch16.buggies.buggyrecepten.model;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Controller;
-
-import java.util.Set;
 
 /*
  * @Author: Joost Numan
