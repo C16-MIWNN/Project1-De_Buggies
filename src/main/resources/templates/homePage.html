@@ -12,6 +12,7 @@
 <h1>All recipes will show up here</h1>
 
 <a th:href="@{/recipe/new}">Add new recipe</a>
+<a th:href="@{/category/new}">Add category</a>
 
 <table>
     <tr>
@@ -26,8 +27,16 @@
                 </a>
         </td>
     </tr>
+</table>
 
-
+<table>
+    <tr>
+        <th>Categories</th>
+        <th></th>
+    </tr>
+    <tr th:each="category : ${allCategories}">
+        <td th:text="${category.getName()}"></td>
+    </tr>
 </table>
 </div>
 

@@ -6,6 +6,7 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
  */
 
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 public class RecipeController {
     private final RecipeRepository recipeRepository;
+    private final CategoryRepository categoryRepository;
 
-    public RecipeController(RecipeRepository recipeRepository) {
+    public RecipeController(RecipeRepository recipeRepository, CategoryRepository categoryRepository) {
         this.recipeRepository = recipeRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow, Recipe formRecipe) {
@@ -40,6 +43,7 @@ public class RecipeController {
         List<Recipe> allRecipes = recipeRepository.findAll();
 
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
 
         return "homePage";
     }
