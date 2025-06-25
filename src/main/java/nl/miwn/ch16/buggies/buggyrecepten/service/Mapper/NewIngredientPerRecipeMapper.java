@@ -30,6 +30,11 @@ public class NewIngredientPerRecipeMapper {
         return ingredientsPerRecipe;
     }
 
+    public static String[] splitIngredientNames(String recipeQuantities) {
+        String[] names = recipeQuantities.split(",");
+        return names;
+    }
+
     public static String[] splitIngredientQuantities(String recipeQuantities) {
         String[] quantities = recipeQuantities.split(",");
         return quantities;
