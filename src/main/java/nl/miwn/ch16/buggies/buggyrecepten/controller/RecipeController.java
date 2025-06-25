@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-
 public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
