@@ -13,20 +13,24 @@
     <div class="recipe-details" th:object="${recipeToBeShown}">
         <div>
             <div>
-                <h1 th:text="${recipeToBeShown.name}">Recipe Name</h1>
-
+                <div class="d-flex align-items-center">
+                    <h1 class="mb-0 me-2" th:text="${recipeToBeShown.name}">Recipe Name</h1>
+                    <form class="m-0 p-0 align-self-end" th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}">
+                        <input type="hidden" th:field="*{recipeId}" />
+                        <button type="submit"
+                                class="btn btn-link p-0 m-0 align-baseline"
+                                style="font-size: inherit; line-height: inherit; text-decoration: none; position: relative;">
+                            <i th:class="${recipeToBeShown.favorite} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
+                        </button>
+                    </form>
+                </div>
                 <p th:each="step, stat : ${recipeToBeShown.getListOfRecipeSteps()}" th:text="|step ${stat.index + 1}. ${step}|"></p>
 
                 <p th:each="ingredient, stat : ${recipeToBeShown.getListOfIngredients()}" th:text="|ingredient ${stat.index + 1}. ${ingredient}|"></p>
 
                 <p th:each="categorie, stat : ${recipeToBeShown.categories}" th:text="|categorie ${stat.index + 1}. ${categorie}|"></p>
 
-                <form th:action="@{/recipe/favorite}" method="post" style="display:inline;" th:object="${recipeToBeShown}">
-                    <input type="hidden" th:field="*{recipeId}" />
-                    <button type="submit">
-                        <span th:text="${recipeToBeShown.favorite} ? 'is' : 'not'"></span>
-                    </button>
-                </form>
+
 
             </div>
         </div>
