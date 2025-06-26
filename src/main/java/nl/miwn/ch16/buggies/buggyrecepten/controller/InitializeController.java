@@ -1,8 +1,10 @@
 package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
+import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
 import nl.miwn.ch16.buggies.buggyrecepten.model.IngredientPerRecipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientPerRecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
@@ -10,7 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
+import java.util.List;
 
 /*
  * @Author: Joost Numan
@@ -22,11 +24,13 @@ public class InitializeController {
     private final IngredientPerRecipeRepository ingredientPerRecipeRepository;
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
+    private final CategoryRepository categoryRepository;
 
-    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository) {
+    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository, CategoryRepository categoryRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @EventListener
@@ -40,6 +44,7 @@ public class InitializeController {
         loadRecipes();
         loadIngredients();
         loadIngredientsPerRecipe();
+        loadCategories();
     }
 
     private void loadRecipes() {
@@ -98,5 +103,23 @@ public class InitializeController {
         ingredientPerRecipeRepository.save(eggsIngredient1);
         ingredientPerRecipeRepository.save(toastIngredient1);
         ingredientPerRecipeRepository.save(pastaIngredient1);
+    }
+
+    private void loadCategories() {
+        Category simple = new Category();
+        Category summer = new Category();
+
+        simple.setName("simple");
+        summer.setName("summer");
+
+        List<Recipe> simpleList = recipeRepository.findAll();
+        List<Recipe> summerlist = recipeRepository.findAllByNameContains("a");
+
+        simple.setRecipes(simpleList);
+        summer.setRecipes(summerlist);
+
+        categoryRepository.save(simple);
+        categoryRepository.save(summer);
+
     }
 }
