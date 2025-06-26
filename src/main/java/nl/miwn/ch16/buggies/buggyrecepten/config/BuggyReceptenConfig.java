@@ -21,7 +21,7 @@ public class BuggyReceptenConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "/homePage").permitAll()
+                        .requestMatchers("/", "/homePage","recipe/detail/{recipeId}").permitAll()
                         .requestMatchers("/webjars/**", "/css/**").permitAll()
                         .anyRequest().authenticated()
                 )

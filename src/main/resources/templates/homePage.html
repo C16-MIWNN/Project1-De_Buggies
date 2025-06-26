@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
     <title>homePage.html</title>
 </head>
@@ -11,11 +11,11 @@
 <div class="container">
 <h1>All recipes will show up here</h1>
 
-<a th:href="@{/recipe/new}">Add new recipe</a>
+<a th:href="@{/recipe/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add new recipe</a>
 <br>
-<a th:href="@{/category/new}">Add category</a>
+<a th:href="@{/category/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add category</a>
 <br>
-<a th:href="@{/ingredient/new}">Add ingredient</a>
+<a th:href="@{/ingredient/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add ingredient</a>
 
 <table>
     <tr>
