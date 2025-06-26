@@ -27,11 +27,11 @@ public class Recipe {
     private Set<IngredientPerRecipe> ingredientsPerRecipe;
 
     public List<String> getListOfRecipeSteps() {
-        return this.recipeSteps.split(";");
+        return Arrays.asList(this.recipeSteps.split(";"));
     }
 
     public List<String> getListOfIngredients() {
-        return this.ingredients.split(";");
+        return Arrays.asList(this.ingredients.split(";"));
     }
 
     public Long getRecipeId() {
