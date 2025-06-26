@@ -1,14 +1,9 @@
 package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
-import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
-import nl.miwn.ch16.buggies.buggyrecepten.model.IngredientPerRecipe;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientPerRecipeRepository;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientRepository;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.model.*;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.*;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 
@@ -25,12 +20,16 @@ public class InitializeController {
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
+    private final AdminUserRepository adminUserRepository;
 
-    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository, CategoryRepository categoryRepository) {
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository, CategoryRepository categoryRepository, AdminUserRepository adminUserRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
         this.categoryRepository = categoryRepository;
+        this.adminUserRepository = adminUserRepository;
     }
 
     @EventListener
@@ -45,6 +44,7 @@ public class InitializeController {
         loadIngredients();
         loadIngredientsPerRecipe();
         loadCategories();
+        loadAdminUsers();
     }
 
     private void loadRecipes() {
@@ -121,5 +121,12 @@ public class InitializeController {
         categoryRepository.save(simple);
         categoryRepository.save(summer);
 
+    }
+
+    private void loadAdminUsers() {
+        AdminUser billy = new AdminUser();
+        billy.setName("Billy");
+        billy.setPassword(encoder.encode("test123"));
+        adminUserRepository.save(billy);
     }
 }
