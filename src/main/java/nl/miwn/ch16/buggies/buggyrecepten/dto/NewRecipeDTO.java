@@ -2,7 +2,7 @@ package nl.miwn.ch16.buggies.buggyrecepten.dto;
 
 /*
  * @Author: Joost Numan
- * this DTO describes an object that can recieve the information for multiple classes to later be split into individual
+ * this DTO describes an object that can receive the information for multiple classes to later be split into individual
  * objects
  */
 
