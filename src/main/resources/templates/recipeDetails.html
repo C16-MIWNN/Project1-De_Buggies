@@ -10,9 +10,21 @@
 
 <div class="container">
 
-    <h1>Here you find the recipe details</h1>
+    <div class="recipe-details" th:object="${recipeToBeShown}">
+        <div>
+            <div>
+                <h1 th:text="${recipeToBeShown.name}">Recipe Name</h1>
 
-    <p>For now this is an empty page</p>
+                <p th:text="${recipeToBeShown.recipeSteps}"></p>
+
+                <p th:text="${recipeToBeShown.ingredients}"></p>
+
+                <p th:text="${recipeToBeShown.categories}"></p>
+
+            </div>
+        </div>
+
+    </div>
 
 </div>
 

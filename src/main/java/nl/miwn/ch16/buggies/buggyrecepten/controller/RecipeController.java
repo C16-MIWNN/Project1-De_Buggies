@@ -48,8 +48,13 @@ public class RecipeController {
     private String showRecipeDetails(@PathVariable("recipeId") Long recipeId, Model datamodel) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
-        return recipeOptional.map(recipe -> setupRecipeDetail(datamodel,
-                recipe, recipe)).orElse("redirect:/homePage");
+        if (recipeOptional.isPresent()) {
+            Recipe recipe = recipeOptional.get();
+            datamodel.addAttribute("recipeToBeShown", recipe);
+            return setupRecipeDetail(datamodel, recipe, recipe);
+        } else {
+            return "redirect:/homePage";
+        }
     }
 
     @GetMapping("/recipe/new")
@@ -76,5 +81,6 @@ public class RecipeController {
 
         return "redirect:/";
     }
+
 }
 

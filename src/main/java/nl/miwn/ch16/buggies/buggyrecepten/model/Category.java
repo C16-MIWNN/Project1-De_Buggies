@@ -48,5 +48,9 @@ public class Category {
         this.recipes = recipes;
     }
 
+    @Override
+    public String toString() {
+        return "Category: " + name;
+    }
 
 }
