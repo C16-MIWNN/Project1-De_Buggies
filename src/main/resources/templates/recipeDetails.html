@@ -21,6 +21,13 @@
 
                 <p th:text="${recipeToBeShown.categories}"></p>
 
+                <form th:action="@{/recipe/favorite}" method="post" style="display:inline;" th:object="${recipeToBeShown}">
+                    <input type="hidden" th:field="*{recipeId}" />
+                    <button type="submit">
+                        <span th:text="${recipeToBeShown.favorite} ? 'is' : 'not'"></span>
+                    </button>
+                </form>
+
             </div>
         </div>
 

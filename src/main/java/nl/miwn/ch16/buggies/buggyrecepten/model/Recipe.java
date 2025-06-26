@@ -16,8 +16,9 @@ public class Recipe {
     private Long recipeId;
 
     private String name;
-    private String recipeSteps;
+    private boolean favorite;
 
+    private String recipeSteps;
     private String ingredients;
 
     @ManyToMany
@@ -48,6 +49,14 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public String getRecipeSteps() {

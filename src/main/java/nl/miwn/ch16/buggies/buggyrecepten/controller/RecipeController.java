@@ -5,10 +5,12 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
  * this program controls all actions regarding the recipe class
  */
 
+import jakarta.servlet.http.HttpServletRequest;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.service.NewRecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,14 +23,15 @@ import java.util.Optional;
 public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
+    private final NewRecipeService newRecipeService;
 
-    public RecipeController(RecipeRepository recipeRepository, CategoryRepository categoryRepository) {
+    public RecipeController(RecipeRepository recipeRepository, CategoryRepository categoryRepository, NewRecipeService newRecipeService) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
+        this.newRecipeService = newRecipeService;
     }
 
-    private String setupRecipeDetail(Model datamodel, Recipe recipeToShow, Recipe formRecipe) {
-        datamodel.addAttribute("recipe", recipeToShow);
+    private String setupRecipeDetail(Model datamodel, Recipe formRecipe) {
         datamodel.addAttribute("formRecipe", formRecipe);
 
         return "RecipeDetails";
@@ -51,7 +54,24 @@ public class RecipeController {
         if (recipeOptional.isPresent()) {
             Recipe recipe = recipeOptional.get();
             datamodel.addAttribute("recipeToBeShown", recipe);
-            return setupRecipeDetail(datamodel, recipe, recipe);
+            return setupRecipeDetail(datamodel, recipe);
+        } else {
+            return "redirect:/homePage";
+        }
+    }
+
+    @PostMapping("/recipe/favorite")
+    public String toggleFavorite(@ModelAttribute("formRecipe") Recipe recipeToBeShown, Model datamodel,
+                                 HttpServletRequest request) {
+        Long recipeId = recipeToBeShown.getRecipeId();
+        if (recipeId != null) {
+            newRecipeService.toggleFavorite(recipeId);
+
+            datamodel.addAttribute("recipeToBeShown", recipeToBeShown);
+
+            String referer = request.getHeader("Referer");
+            return "redirect:" + referer;
+
         } else {
             return "redirect:/homePage";
         }
