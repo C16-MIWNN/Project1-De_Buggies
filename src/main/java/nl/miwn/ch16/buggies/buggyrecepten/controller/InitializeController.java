@@ -60,6 +60,10 @@ public class InitializeController {
         toast.setRecipeSteps("toast bread");
         pasta.setRecipeSteps("boil pasta");
 
+        eggs.setIngredients("egg");
+        toast.setIngredients("bread");
+        pasta.setIngredients("spaghetti");
+
         recipeRepository.save(eggs);
         recipeRepository.save(toast);
         recipeRepository.save(pasta);

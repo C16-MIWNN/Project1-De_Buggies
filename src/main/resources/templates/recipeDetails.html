@@ -15,11 +15,11 @@
             <div>
                 <h1 th:text="${recipeToBeShown.name}">Recipe Name</h1>
 
-                <p th:text="${recipeToBeShown.recipeSteps}"></p>
+                <p th:each="step, stat : ${recipeToBeShown.getListOfRecipeSteps()}" th:text="|step ${stat.index + 1}. ${step}|"></p>
 
-                <p th:text="${recipeToBeShown.ingredients}"></p>
+                <p th:each="ingredient, stat : ${recipeToBeShown.getListOfIngredients()}" th:text="|ingredient ${stat.index + 1}. ${ingredient}|"></p>
 
-                <p th:text="${recipeToBeShown.categories}"></p>
+                <p th:each="categorie, stat : ${recipeToBeShown.categories}" th:text="|categorie ${stat.index + 1}. ${categorie}|"></p>
 
                 <form th:action="@{/recipe/favorite}" method="post" style="display:inline;" th:object="${recipeToBeShown}">
                     <input type="hidden" th:field="*{recipeId}" />
