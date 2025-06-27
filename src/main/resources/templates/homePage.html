@@ -20,6 +20,10 @@
             <br>
             <a th:href="@{/ingredient/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add ingredient</a>
 
+            <div th:each="recipe : ${allRecipes}">
+                <div th:replace="~{fragments/recipe :: recipeCard(${recipe})}"></div>
+            </div>
+
             <table>
                 <tr>
                     <th>Name</th>
