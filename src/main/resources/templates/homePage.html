@@ -9,40 +9,44 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-<h1>All recipes will show up here</h1>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col">
+            <h1>All recipes will show up here</h1>
 
-<a th:href="@{/recipe/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add new recipe</a>
-<br>
-<a th:href="@{/category/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add category</a>
-<br>
-<a th:href="@{/ingredient/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add ingredient</a>
+            <a th:href="@{/recipe/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add new recipe</a>
+            <br>
+            <a th:href="@{/category/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add category</a>
+            <br>
+            <a th:href="@{/ingredient/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add ingredient</a>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th></th>
-    </tr>
-    <tr th:each="recipe : ${allRecipes}">
-        <td th:text="${recipe.getName()}"></td>
-        <td th:action="@{'/recipe/recipeDetails/' + ${recipe.getRecipeId()}}">
-                <a role="button" class="btn" th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}">
-                    Details
-                </a>
-        </td>
-    </tr>
-</table>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+                <tr th:each="recipe : ${allRecipes}">
+                    <td th:text="${recipe.getName()}"></td>
+                    <td th:action="@{'/recipe/recipeDetails/' + ${recipe.getRecipeId()}}">
+                            <a role="button" class="btn" th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}">
+                                Details
+                            </a>
+                    </td>
+                </tr>
+            </table>
 
-<table>
-    <tr>
-        <th>Categories</th>
-        <th></th>
-    </tr>
-    <tr th:each="category : ${allCategories}">
-        <td th:text="${category.getName()}"></td>
-    </tr>
-</table>
+            <table>
+                <tr>
+                    <th>Categories</th>
+                    <th></th>
+                </tr>
+                <tr th:each="category : ${allCategories}">
+                    <td th:text="${category.getName()}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
-
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomscripts}"></div>
 
