@@ -19,24 +19,11 @@
             <br>
             <a th:href="@{/ingredient/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add ingredient</a>
 
-            <div th:each="recipe : ${allRecipes}">
-                <div th:replace="~{fragments/recipe :: recipeCard(${recipe})}"></div>
+            <div class="row row-cols-3">
+                <div th:each="recipe : ${allRecipes}" class="col">
+                    <div th:replace="~{fragments/recipe :: recipeCard(${recipe})}"></div>
+                </div>
             </div>
-
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th></th>
-                </tr>
-                <tr th:each="recipe : ${allRecipes}">
-                    <td th:text="${recipe.getName()}"></td>
-                    <td th:action="@{'/recipe/recipeDetails/' + ${recipe.getRecipeId()}}">
-                            <a role="button" class="btn" th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}">
-                                Details
-                            </a>
-                    </td>
-                </tr>
-            </table>
 
             <table>
                 <tr>
@@ -47,7 +34,9 @@
                     <td th:text="${category.getName()}"></td>
                 </tr>
             </table>
+
         </div>
+        <div class="col-2"></div>
     </div>
 </div>
 <div th:replace="~{fragments/general :: footer}"></div>

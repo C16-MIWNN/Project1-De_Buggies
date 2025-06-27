@@ -24,9 +24,6 @@ public class Recipe {
     @ManyToMany
     private List<Category> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private Set<IngredientPerRecipe> ingredientsPerRecipe;
-
     public List<String> getListOfRecipeSteps() {
         return Arrays.asList(this.recipeSteps.split(";"));
     }

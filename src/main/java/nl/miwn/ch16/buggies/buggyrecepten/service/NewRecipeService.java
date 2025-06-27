@@ -3,7 +3,6 @@ package nl.miwn.ch16.buggies.buggyrecepten.service;
 import nl.miwn.ch16.buggies.buggyrecepten.dto.NewRecipeDTO;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
-import nl.miwn.ch16.buggies.buggyrecepten.service.Mapper.NewRecipeMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,10 +23,6 @@ public class NewRecipeService {
 
     public void saveRecipe(Recipe newRecipe) {
         recipeRepository.save(newRecipe);
-    }
-
-    public void save(NewRecipeDTO newRecipeDTO) {
-        saveRecipe(NewRecipeMapper.fromDTO(newRecipeDTO));;
     }
 
     public void toggleFavorite(Long recipeId) {

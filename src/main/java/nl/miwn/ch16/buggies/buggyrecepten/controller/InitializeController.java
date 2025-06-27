@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 public class InitializeController {
-    private final IngredientPerRecipeRepository ingredientPerRecipeRepository;
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
@@ -24,10 +23,12 @@ public class InitializeController {
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public InitializeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository, CategoryRepository categoryRepository, AdminUserRepository adminUserRepository) {
+    public InitializeController(IngredientRepository ingredientRepository,
+                                RecipeRepository recipeRepository,
+                                CategoryRepository categoryRepository,
+                                AdminUserRepository adminUserRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
-        this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
         this.categoryRepository = categoryRepository;
         this.adminUserRepository = adminUserRepository;
     }
@@ -42,7 +43,6 @@ public class InitializeController {
     private void initializeDB() {
         loadRecipes();
         loadIngredients();
-        loadIngredientsPerRecipe();
         loadCategories();
         loadAdminUsers();
     }
@@ -83,32 +83,6 @@ public class InitializeController {
         ingredientRepository.save(spaghetti);
     }
 
-    private void loadIngredientsPerRecipe() {
-        IngredientPerRecipe eggsIngredient1 = new IngredientPerRecipe();
-        IngredientPerRecipe toastIngredient1 = new IngredientPerRecipe();
-        IngredientPerRecipe pastaIngredient1 = new IngredientPerRecipe();
-
-        eggsIngredient1.setQuantity(1.0);
-        toastIngredient1.setQuantity(2.0);
-        pastaIngredient1.setQuantity(100.0);
-
-        eggsIngredient1.setUnitOfMeasurement("");
-        toastIngredient1.setUnitOfMeasurement("slices");
-        pastaIngredient1.setUnitOfMeasurement("grams");
-
-        eggsIngredient1.setIngredient(ingredientRepository.findByName("Egg").get());
-        toastIngredient1.setIngredient(ingredientRepository.findByName("Bread").get());
-        pastaIngredient1.setIngredient(ingredientRepository.findByName("Spaghetti").get());
-
-        eggsIngredient1.setRecipe(recipeRepository.findByName("Egg").get());
-        toastIngredient1.setRecipe(recipeRepository.findByName("Toast").get());
-        pastaIngredient1.setRecipe(recipeRepository.findByName("Pasta").get());
-
-        ingredientPerRecipeRepository.save(eggsIngredient1);
-        ingredientPerRecipeRepository.save(toastIngredient1);
-        ingredientPerRecipeRepository.save(pastaIngredient1);
-    }
-
     private void loadCategories() {
         Category simple = new Category();
         Category summer = new Category();
@@ -124,7 +98,6 @@ public class InitializeController {
 
         categoryRepository.save(simple);
         categoryRepository.save(summer);
-
     }
 
     private void loadAdminUsers() {

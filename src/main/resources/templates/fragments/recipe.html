@@ -10,12 +10,12 @@
 </head>
 <body>
 <div th:fragment="recipeCard(recipe)">
-    <div class="card" style="width: 18rem;">
+    <div class="card card-margins" style="width: 18rem;">
         <div class="card-header">
-            <span th:text="${recipe.name}"></span>
+            <a th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}" th:text="${recipe.getName()}"></a>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item" th:each="category : ${categories}"><span th:text="category"></span></li>
+            <li class="list-group-item" th:each="category : ${recipe.categories}"><span th:text="${category}"></span></li>
 
         </ul>
     </div>
