@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
-    <link rel="stylesheet" type="text/css" href="/css/languageCenter.css" />
+    <link rel="stylesheet" type="text/css" href="/css/buggyRecipes.css" />
     <link rel="stylesheet" type="text/css" href="/css/darkMode.css" />
 
     <script>
@@ -30,6 +30,10 @@
 
 <div th:fragment="navbar">
     <ul class="nav justify-content-center">
+        <a href="/" class="btn btn-primary d-flex align-items-center justify-content-center" title="Go to homepage">
+            <i class="bi bi-house-fill"></i>
+            <span class="ms-2">Buggy Recepten</span>
+        </a>
         <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">Login</a></li>
         <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" th:href="@{/logout}">Logout <span sec:authentication="name"></span></a>
