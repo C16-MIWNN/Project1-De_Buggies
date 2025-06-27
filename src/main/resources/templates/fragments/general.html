@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:fragment="baseheader(title)">
     <meta charset="UTF-8">
     <title th:replace="${title}">This is the base title</title>
@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
     <link rel="stylesheet" type="text/css" href="/css/buggyRecipes.css" />
-    <link rel="stylesheet" type="text/css" href="/css/darkMode.css" />
 
     <script>
         const savedTheme = localStorage.getItem('theme') || 'light';

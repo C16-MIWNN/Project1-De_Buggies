@@ -22,7 +22,7 @@ public class BuggyReceptenConfig {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
                         .requestMatchers("/", "/homePage","recipe/detail/{recipeId}").permitAll()
-                        .requestMatchers("/webjars/**", "/css/**").permitAll()
+                        .requestMatchers("/webjars/**", "/css/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

@@ -1,6 +1,5 @@
 package nl.miwn.ch16.buggies.buggyrecepten.service;
 
-import nl.miwn.ch16.buggies.buggyrecepten.dto.NewRecipeDTO;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import java.util.Optional;
 
 @Service
 public class NewRecipeService {
-
     private final RecipeRepository recipeRepository;
 
     public NewRecipeService(RecipeRepository recipeRepository) {
