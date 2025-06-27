@@ -21,10 +21,10 @@
         <input
                 type="checkbox"
                 id="flexSwitchCheckChecked"
-                class="switch-input"
+                class="switch-input d-none"
                 onclick="toggleMode()"
         />
-        <label for="flexSwitchCheckChecked" id="modeLabel" class="switch-label">Dark mode</label>
+        <label for="flexSwitchCheckChecked" id="modeIcon" class="switch-label bi bi-sun fs-4"></label>
     </div>
 </div>
 
@@ -51,6 +51,9 @@
                   <li class="nav-item" sec:authorize="isAuthenticated()">
                       <a class="nav-link" th:href="@{/logout}">Logout <span sec:authentication="name"></span></a>
                   </li>
+                  <li>
+                      <div th:replace="~{fragments/general :: colormode}"></div>
+                  </li>
                 </ul>
             </div>
         </div>
@@ -68,21 +71,26 @@
     <script>
         window.onload = function () {
             const currentTheme = localStorage.getItem('theme') || 'light';
-            document.getElementById('flexSwitchCheckChecked').checked = currentTheme === 'dark';
-            document.getElementById('modeLabel').textContent = currentTheme === 'dark' ? 'Dark mode' : 'Light mode';
+            const checkbox = document.getElementById('flexSwitchCheckChecked');
+            const icon = document.getElementById('modeIcon');
+
+            checkbox.checked = currentTheme === 'dark';
+            icon.className = currentTheme === 'dark' ? 'bi bi-moon fs-4' : 'bi bi-sun fs-4';
+            document.documentElement.setAttribute('data-bs-theme', currentTheme);
         };
 
         function toggleMode() {
             const checkbox = document.getElementById('flexSwitchCheckChecked');
-            const label = document.getElementById('modeLabel');
+            const icon = document.getElementById('modeIcon');
             const newTheme = checkbox.checked ? 'dark' : 'light';
 
             document.documentElement.setAttribute('data-bs-theme', newTheme);
             localStorage.setItem('theme', newTheme);
 
-            label.textContent = checkbox.checked ? 'Dark mode' : 'Light mode';
+            icon.className = checkbox.checked ? 'bi bi-moon fs-4' : 'bi bi-sun fs-4';
         }
     </script>
+
 </div>
 </body>
 </html>
