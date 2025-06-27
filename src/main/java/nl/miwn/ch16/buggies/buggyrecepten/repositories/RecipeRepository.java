@@ -14,4 +14,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     List<Recipe> findAllByNameContains(String name);
 
+    List<Recipe> findAllByFavorite(boolean favorite);
+
 }

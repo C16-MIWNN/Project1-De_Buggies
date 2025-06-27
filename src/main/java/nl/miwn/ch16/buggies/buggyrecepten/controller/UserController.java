@@ -2,6 +2,7 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
 import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.service.CustomUserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class UserController {
 
     private final AdminUserRepository adminUserRepository;
+    private final RecipeRepository recipeRepository;
     private final CustomUserDetailsService customUserDetailsService;
 
-    public UserController(AdminUserRepository adminUserRepository, CustomUserDetailsService customUserDetailsService) {
+    public UserController(AdminUserRepository adminUserRepository, RecipeRepository recipeRepository, CustomUserDetailsService customUserDetailsService) {
         this.adminUserRepository = adminUserRepository;
+        this.recipeRepository = recipeRepository;
         this.customUserDetailsService = customUserDetailsService;
     }
 
@@ -31,6 +34,8 @@ public class UserController {
     public String userProfile(Model model) {
         Optional<AdminUser> user = customUserDetailsService.getCurrentUser();
         model.addAttribute("user", user);
+
+        model.addAttribute("allFavorites", recipeRepository.findAllByFavorite(true));
         return "personalPage";
     }
 
