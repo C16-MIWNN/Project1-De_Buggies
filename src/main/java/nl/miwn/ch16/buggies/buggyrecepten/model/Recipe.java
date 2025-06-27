@@ -82,4 +82,9 @@ public class Recipe {
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
+
+    @Override
+    public String toString() {
+        return String.format(this.name);
+    }
 }
