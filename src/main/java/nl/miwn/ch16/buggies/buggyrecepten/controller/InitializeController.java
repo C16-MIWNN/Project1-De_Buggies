@@ -132,5 +132,10 @@ public class InitializeController {
         billy.setName("Billy");
         billy.setPassword(encoder.encode("test123"));
         adminUserRepository.save(billy);
+
+        AdminUser harry = new AdminUser();
+        harry.setName("Harry");
+        harry.setPassword(encoder.encode("test456"));
+        adminUserRepository.save(harry);
     }
 }
