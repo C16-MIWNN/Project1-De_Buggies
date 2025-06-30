@@ -8,19 +8,23 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <h1>New Ingredient Form</h1>
-    <form th:action="@{/ingredient/new}" method="post" th:object="${formIngredient}">
-        <table>
-            <tr>
-                <td>Ingredient Name</td>
-                <td><input type="text" th:field="*{name}"></td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col">
+            <h1>New Ingredient Form</h1>
+            <form th:action="@{/ingredient/new}" method="post" th:object="${formIngredient}">
+                <table>
+                    <tr>
+                        <td>Ingredient Name</td>
+                        <td><input type="text" th:field="*{name}"></td>
+                    </tr>
+                </table>
 
-        <input type="submit" value="Save Ingredient"/>
+                <input type="submit" value="Save Ingredient"/>
 
-    </form>
-
+            </form>
+        </div>
+    </div>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

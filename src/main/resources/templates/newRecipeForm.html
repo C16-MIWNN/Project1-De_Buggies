@@ -8,47 +8,48 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <h1>Here you can add a new recipe</h1>
-</div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col">
+            <h1>New Recipe Form</h1>
+            <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">
+                <table>
+                    <tr>
+                        <td>Recipe Name</td>
+                        <td><input type="text" th:field="*{name}"></td>
+                    </tr>
+                    <tr>
+                        <td>Recipe steps</td>
+                        <td>Seperate the steps with a ;</td>
+                        <td><input type="text" th:field="*{recipeSteps}"></td>
+                    </tr>
+                    <tr>
+                        <td>Ingredients</td>
+                        <td>Seperate the ingredients with a ;</td>
+                        <td><input type="text" th:field="*{ingredients}"></td>
+                    </tr>
+                    <tr>
+                        <td>Favorite</td>
+                        <td><input type="checkbox" th:field="*{favorite}"></td>
+                    </tr>
+                    <tr>
+                        <td>Recipe category</td>
+                        <td>
+                            <select th:field="*{categories}" multiple>
+                            <option th:each="category : ${allCategories}"
+                                    th:text="${category.name}"
+                                    th:value="${category.categoryId}">
+                            </option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
 
-<div class="container">
-    <h1>New Recipe Form</h1>
-    <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">
-        <table>
-            <tr>
-                <td>Recipe Name</td>
-                <td><input type="text" th:field="*{name}"></td>
-            </tr>
-            <tr>
-                <td>Recipe steps</td>
-                <td>Seperate the steps with a ;</td>
-                <td><input type="text" th:field="*{recipeSteps}"></td>
-            </tr>
-            <tr>
-                <td>Ingredients</td>
-                <td>Seperate the ingredients with a ;</td>
-                <td><input type="text" th:field="*{ingredients}"></td>
-            </tr>
-            <tr>
-                <td>Favorite</td>
-                <td><input type="checkbox" th:field="*{favorite}"></td>
-            </tr>
-            <tr>
-                <td>Recipe category</td>
-                <td>
-                    <select th:field="*{categories}" multiple>
-                    <option th:each="category : ${allCategories}"
-                            th:text="${category.name}"
-                            th:value="${category.categoryId}">
-                    </option>
-                    </select>
-                </td>
-            </tr>
-        </table>
+                <input type="submit" value="Save Recipe" />
 
-        <input type="submit" value="Save Recipe" />
-
-    </form>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
