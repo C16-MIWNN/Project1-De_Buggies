@@ -115,4 +115,14 @@ public class RecipeController {
         return "redirect:/";
     }
 
+    @GetMapping("/recipe/delete/{recipeId}")
+    private String deleteRecipe(@PathVariable("recipeId") Long recipeId) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+        if (recipeOptional.isPresent()) {
+            recipeRepository.deleteById(recipeId);
+        }
+
+        return "redirect:/";
+    }
+
 }
