@@ -17,7 +17,7 @@
                         <div class="d-flex align-items-center">
                             <h1 class="mb-0 me-2" th:text="${recipeToBeShown.name}">Recipe Name</h1>
                             <form class="m-0 p-0 align-self-end" th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}">
-                                <input type="hidden" th:field="*{name}" />
+                                <input type="hidden" th:field="*{recipeId}" />
                                 <button type="submit"
                                         class="btn btn-link p-0 m-0 align-baseline"
                                         style="font-size: inherit; line-height: inherit; text-decoration: none; position: relative;">
@@ -31,7 +31,7 @@
 
                         <p th:each="categorie, stat : ${recipeToBeShown.categories}" th:text="|categorie ${stat.index + 1}. ${categorie}|"></p>
 
-
+                        <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}">Edit</a>
 
                     </div>
                 </div>

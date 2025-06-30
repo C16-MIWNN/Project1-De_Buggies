@@ -82,10 +82,10 @@ public class RecipeController {
         datamodel.addAttribute("formRecipe", new Recipe());
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
 
-        return "newRecipeForm";
+        return "recipeForm";
     }
 
-    @PostMapping("/recipe/new")
+    @PostMapping("/recipe/save")
     private String saveOrUpdateRecipe(@ModelAttribute("formDesign") Recipe recipeToBeSaved,
                                       @RequestParam List<Long> categories,
                                       BindingResult bindingResult){
@@ -98,6 +98,19 @@ public class RecipeController {
 
         recipeRepository.save(recipeToBeSaved);
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/recipe/edit/{name}")
+    private String editRecipe(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
+
+        if (recipeOptional.isPresent()) {
+            Recipe recipe = recipeOptional.get();
+            datamodel.addAttribute("formRecipe", recipe);
+            datamodel.addAttribute("allCategories", categoryRepository.findAll());
+            return "recipeForm";
+        }
 
         return "redirect:/";
     }
