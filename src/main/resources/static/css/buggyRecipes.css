@@ -73,3 +73,16 @@ a:hover {
     color: green;
     text-decoration: none;
 }
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-header {
+    font-size: 30px;
+}
+
+.category-list {
+    font-size: 15;
+}

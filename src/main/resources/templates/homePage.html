@@ -10,14 +10,18 @@
 <div class="container">
     <div class="row">
         <div class="col-2"></div>
-        <div class="col">
-            <h1>All recipes will show up here</h1>
+            <div class="col">
+                <h1 class="justify-content-end">All recipes will show up here</h1>
+            </div>
+    </div>
+</div>
 
-            <a th:href="@{/recipe/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add new recipe</a>
-            <br>
-            <a th:href="@{/category/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add category</a>
-            <br>
-            <a th:href="@{/ingredient/new}" sec:authorize="hasRole('ROLE_ADMIN')">Add ingredient</a>
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="~{fragments/general :: page-menu}"></div>
+        </div>
+        <div class="col">
 
             <div class="row row-cols-3">
                 <div th:each="recipe : ${allRecipes}" class="col">

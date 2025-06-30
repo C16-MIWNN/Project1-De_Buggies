@@ -11,13 +11,17 @@
 <body>
 <div th:fragment="recipeCard(recipe)">
     <div class="card card-margins" style="width: 18rem;">
+        <a th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}">
+            <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg" class="card-img-top" alt="image alt">
+        </a>
+
+        <ul class="list-group list-group-flush">
+            <li class="category-list list-group-item" th:each="category : ${recipe.categories}"><span th:text="${category}"></span></li>
+        </ul>
+
         <div class="card-header">
             <a th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}" th:text="${recipe.getName()}"></a>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item" th:each="category : ${recipe.categories}"><span th:text="${category}"></span></li>
-
-        </ul>
     </div>
 </div>
 </body>
