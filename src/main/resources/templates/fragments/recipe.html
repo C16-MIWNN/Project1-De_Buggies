@@ -12,7 +12,7 @@
 <div th:fragment="recipeCard(recipe)">
     <div class="card card-margins" style="width: 18rem;">
         <div class="card-header">
-            <a th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.getRecipeId()})}" th:text="${recipe.getName()}"></a>
+            <a th:href="@{/recipe/detail/{recipeId}(recipeId = ${recipe.name})}" th:text="${recipe.getName()}"></a>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" th:each="category : ${recipe.categories}"><span th:text="${category}"></span></li>

@@ -47,9 +47,9 @@ public class RecipeController {
         return "homePage";
     }
 
-    @GetMapping("/recipe/detail/{recipeId}")
-    private String showRecipeDetails(@PathVariable("recipeId") Long recipeId, Model datamodel) {
-        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+    @GetMapping("/recipe/detail/{name}")
+    private String showRecipeDetails(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
 
         if (recipeOptional.isPresent()) {
             Recipe recipe = recipeOptional.get();
