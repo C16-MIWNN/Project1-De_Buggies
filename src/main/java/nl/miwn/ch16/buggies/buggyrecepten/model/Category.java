@@ -17,19 +17,19 @@ public class Category {
 
     @Id
     @GeneratedValue
-    private Long CategoryId;
+    private Long categoryId;
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "categories")
     private List<Recipe> recipes = new ArrayList<>();
 
     public Long getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(Long categoryId) {
-        CategoryId = categoryId;
+        categoryId = categoryId;
     }
 
     public String getName() {

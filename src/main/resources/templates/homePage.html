@@ -18,12 +18,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-2">
-            <div th:replace="~{fragments/general :: page-menu}"></div>
-        </div>
+        <div class="col-2"></div>
         <div class="col">
 
-            <div class="row row-cols-3">
+            <div class="row row-cols-3  g-3">
                 <div th:each="recipe : ${allRecipes}" class="col">
                     <div th:replace="~{fragments/recipe :: recipeCard(${recipe})}"></div>
                 </div>
@@ -40,7 +38,9 @@
             </table>
 
         </div>
-        <div class="col-2"></div>
+        <div class="col-2">
+            <div th:replace="~{fragments/general :: page-actions}"></div>
+        </div>
     </div>
 </div>
 <div th:replace="~{fragments/general :: footer}"></div>

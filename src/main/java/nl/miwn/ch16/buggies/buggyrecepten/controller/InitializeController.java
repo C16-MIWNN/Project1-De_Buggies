@@ -21,7 +21,7 @@ public class InitializeController {
     private final CategoryRepository categoryRepository;
     private final AdminUserRepository adminUserRepository;
 
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public InitializeController(IngredientRepository ingredientRepository,
                                 RecipeRepository recipeRepository,
@@ -43,7 +43,7 @@ public class InitializeController {
     private void initializeDB() {
         loadRecipes();
         loadIngredients();
-        loadCategories();
+        loadCategories();   // <-- this now correctly links recipes and categories
         loadAdminUsers();
     }
 
@@ -64,9 +64,7 @@ public class InitializeController {
         toast.setIngredients("bread");
         pasta.setIngredients("spaghetti");
 
-        recipeRepository.save(eggs);
-        recipeRepository.save(toast);
-        recipeRepository.save(pasta);
+        recipeRepository.saveAll(List.of(eggs, toast, pasta));
     }
 
     private void loadIngredients() {
@@ -78,37 +76,47 @@ public class InitializeController {
         bread.setName("Bread");
         spaghetti.setName("Spaghetti");
 
-        ingredientRepository.save(egg);
-        ingredientRepository.save(bread);
-        ingredientRepository.save(spaghetti);
+        ingredientRepository.saveAll(List.of(egg, bread, spaghetti));
     }
 
     private void loadCategories() {
+        // Create categories
         Category simple = new Category();
         Category summer = new Category();
 
-        simple.setName("simple");
-        summer.setName("summer");
+        simple.setName("Simple");
+        summer.setName("Summer");
 
-        List<Recipe> simpleList = recipeRepository.findAll();
-        List<Recipe> summerlist = recipeRepository.findAllByNameContains("a");
+        // Retrieve existing recipes
+        List<Recipe> allRecipes = recipeRepository.findAll();
 
-        simple.setRecipes(simpleList);
-        summer.setRecipes(summerlist);
+        // Set relationships from owning side (Recipe)
+        for (Recipe recipe : allRecipes) {
+            recipe.getCategories().add(simple);
+            recipe.getCategories().add(summer);
 
+            // Optional: set inverse side
+            simple.getRecipes().add(recipe);
+            summer.getRecipes().add(recipe);
+        }
+
+        // Save categories first (optional if cascading is enabled)
         categoryRepository.save(simple);
         categoryRepository.save(summer);
+
+        // Save recipes (important — Recipe owns the relationship)
+        recipeRepository.saveAll(allRecipes);
     }
 
     private void loadAdminUsers() {
         AdminUser billy = new AdminUser();
         billy.setName("Billy");
         billy.setPassword(encoder.encode("test123"));
-        adminUserRepository.save(billy);
 
         AdminUser harry = new AdminUser();
         harry.setName("Harry");
         harry.setPassword(encoder.encode("test456"));
-        adminUserRepository.save(harry);
+
+        adminUserRepository.saveAll(List.of(billy, harry));
     }
 }

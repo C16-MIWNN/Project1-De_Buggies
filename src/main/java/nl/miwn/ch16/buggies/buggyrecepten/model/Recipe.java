@@ -21,7 +21,10 @@ public class Recipe {
     private String recipeSteps;
     private String ingredients;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
 
     public List<String> getListOfRecipeSteps() {
@@ -64,8 +67,8 @@ public class Recipe {
         this.recipeSteps = recipeSteps;
     }
 
-    public void setCategories(List<Category> selectedTeachers) {
-        this.categories = selectedTeachers;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public List<Category> getCategories() {
