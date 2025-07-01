@@ -11,7 +11,7 @@ import java.util.*;
 
 @Entity
 public class Recipe {
-
+    
     @Id @GeneratedValue
     private Long recipeId;
 
