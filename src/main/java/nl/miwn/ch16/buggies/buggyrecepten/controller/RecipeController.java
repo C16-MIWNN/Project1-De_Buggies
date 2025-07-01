@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,21 +62,24 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/favorite")
-    public String toggleFavorite(@ModelAttribute("formRecipe") Recipe recipeToBeShown, Model datamodel,
-                                 HttpServletRequest request) {
+    public String toggleFavorite(@ModelAttribute("formRecipe") Recipe recipeToBeShown,
+                                 Model datamodel,
+                                 HttpServletRequest request,
+                                 Principal principal) {
         Long recipeId = recipeToBeShown.getRecipeId();
+
         if (recipeId != null) {
-            newRecipeService.toggleFavorite(recipeId);
+            String username = principal.getName();
+            newRecipeService.toggleFavorite(recipeId, username);
 
             datamodel.addAttribute("recipeToBeShown", recipeToBeShown);
 
             String referer = request.getHeader("Referer");
             return "redirect:" + referer;
-
-        } else {
-            return "redirect:/homePage";
         }
+        return "redirect:/";
     }
+
 
     @GetMapping("/recipe/new")
     private String showNewRecipeForm(Model datamodel) {

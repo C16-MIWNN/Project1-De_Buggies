@@ -21,6 +21,9 @@ public class Recipe {
     private String recipeSteps;
     private String ingredients;
 
+    @ManyToMany(mappedBy = "favoriteRecipes")
+    private Set<AdminUser> favoritedByAdmins = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
