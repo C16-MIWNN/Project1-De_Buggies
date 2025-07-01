@@ -1,9 +1,6 @@
 package nl.miwn.ch16.buggies.buggyrecepten.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +16,7 @@ public class Category {
     @GeneratedValue
     private Long categoryId;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "categories")

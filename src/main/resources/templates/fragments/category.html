@@ -18,5 +18,16 @@
   </div>
 </div>
 
+<div th:fragment="category-search(allCategories)">
+    <form action="/category/search-by-category" method="get" class="category-form">
+        <p>Choose a category:</p>
+        <div th:each="category : ${allCategories}">
+            <input type="radio" th:id="${category.categoryId}" name="category" th:value="${category.name}" />
+            <label th:for="${category.categoryId}" th:text="${category.name}"></label>
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
 </body>
 </html>

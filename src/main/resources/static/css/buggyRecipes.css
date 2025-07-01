@@ -111,3 +111,37 @@ a.category-btn {
     --bs-btn-padding-x: 0.25rem;
     --bs-btn-padding-y: 0rem;
 }
+
+form.category-form {
+    background-color: #F7FBF5;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px;
+}
+
+form.category-form div {
+    margin-bottom: 8px;
+}
+
+form.category-form button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+[data-bs-theme="dark"] form.category-form {
+    background-color: #37A736;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px;
+}
+
+[data-bs-theme="dark"] form.category-form div {
+    margin-bottom: 8px;
+}
+
+[data-bs-theme="dark"] form.category-form button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
