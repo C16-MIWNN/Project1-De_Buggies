@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
+  <title>Categories</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <h1 class="justify-content-end">All categories will show up here</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col">
+      <div class="row row-cols-3  g-3">
+        <div th:each="category : ${allCategories}" class="col">
+          <div th:replace="~{fragments/category :: categoryCard(${category})}"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-2">
+    </div>
+  </div>
+</div>
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomscripts}"></div>
+
+
+</body>
+</html>

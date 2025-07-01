@@ -41,4 +41,11 @@ public class CategoryController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/category")
+    private String showAllCategories(Model datamodel) {
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
+
+        return "categories";
+    }
 }

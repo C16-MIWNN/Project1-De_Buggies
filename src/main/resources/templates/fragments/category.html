@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category fragments</title>
+</head>
+<body>
+
+<div th:fragment="categoryCard(category)">
+  <div class="card recipe-card">
+    <a href="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg">
+      <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg" class="card-img-top" alt="image alt">
+    </a>
+
+    <div class="card-text">
+      <a class="card-title" href="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg" th:text="${category.name}"></a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
