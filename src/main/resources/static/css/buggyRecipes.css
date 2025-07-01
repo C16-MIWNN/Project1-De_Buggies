@@ -12,6 +12,7 @@
     color: white;
 }
 
+/*favorite button*/
 .bi-star-fill {
     color: #37A736;
 }
@@ -20,6 +21,7 @@
     color: #37A736;
 }
 
+/*general links*/
 a:link {
     color: green;
     text-decoration: none;
@@ -70,6 +72,7 @@ a:hover {
     text-decoration: none;
 }
 
+/*General card styling*/
 .card-img-top {
     height: 200px;
     object-fit: cover;
@@ -97,11 +100,13 @@ a:hover {
     width: 18vw;
 }
 
+/*action button*/
 a.action-btn {
     color: white;
     font-size: 2rem;
 }
 
+/*category button in cards*/
 a.category-btn {
     color: white;
     font-size: 0.75rem;
@@ -112,6 +117,41 @@ a.category-btn {
     --bs-btn-padding-y: 0rem;
 }
 
+a.category-btn:hover, a.category-btn:focus {
+    background-color: #b3e2a6;
+    color: #155d12;
+    border: none;
+    font-size: 0.75rem;
+    margin: 2px;
+    height: 1.25rem;
+    width: 4rem;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-padding-y: 0rem;
+}
+
+[data-bs-theme="dark"] a.category-btn {
+    background-color: #c9f3ba;
+    color: #1f881e;
+    font-size: 0.75rem;
+    margin: 2px;
+    height: 1.25rem;
+    width: 4rem;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-padding-y: 0rem;
+}
+
+[data-bs-theme="dark"] a.category-btn:hover, a.category-btn:focus {
+    background-color: #b3e2a6;
+    color: #155d12;
+    font-size: 0.75rem;
+    margin: 2px;
+    height: 1.25rem;
+    width: 4rem;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-padding-y: 0rem;
+}
+
+/*category search button and form*/
 form.category-form {
     background-color: #F7FBF5;
     border-radius: 10px;
@@ -121,12 +161,6 @@ form.category-form {
 
 form.category-form div {
     margin-bottom: 8px;
-}
-
-form.category-form button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    border-radius: 5px;
 }
 
 [data-bs-theme="dark"] form.category-form {
@@ -140,8 +174,26 @@ form.category-form button {
     margin-bottom: 8px;
 }
 
-[data-bs-theme="dark"] form.category-form button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    border-radius: 5px;
+.btn-search-form {
+    background-color: #37A736;
+    color: #F7FBF5;
+    border: none;
+}
+
+.btn-search-form:hover, .btn-search-form:focus {
+    background-color: #b3e2a6;
+    color: #155d12;
+    box-shadow: none;
+}
+
+[data-bs-theme="dark"] .btn-search-form {
+    background-color: #c9f3ba;
+    color: #1f881e;
+    border: none;
+}
+
+[data-bs-theme="dark"] .btn-search-form:hover, .btn-search-form:focus {
+    background-color: #b3e2a6;
+    color: #155d12;
+    box-shadow: none;
 }
