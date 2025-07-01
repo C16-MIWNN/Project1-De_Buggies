@@ -30,13 +30,13 @@
 <div th:fragment="page-actions">
     <ul sec:authorize="hasRole('ROLE_ADMIN')">
         <li class="list-group-item">
-            <a th:href="@{/recipe/new}" class="btn btn-primary">Add new recipe</a>
+            <a th:href="@{/recipe/new}" class="btn btn-search-form">Add new recipe</a>
         </li>
         <li class="list-group-item">
-            <a th:href="@{/category/new}" class="btn btn-primary">Add category</a>
+            <a th:href="@{/category/new}" class="btn btn-search-form">Add category</a>
         </li>
         <li class="list-group-item">
-            <a th:href="@{/ingredient/new}" class="btn btn-primary">Add ingredient</a>
+            <a th:href="@{/ingredient/new}" class="btn btn-search-form">Add ingredient</a>
         </li>
     </ul>
 </div>

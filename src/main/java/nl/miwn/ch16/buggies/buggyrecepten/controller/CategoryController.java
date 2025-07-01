@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Marnix Ripke
@@ -58,13 +60,30 @@ public class CategoryController {
     }
 
     @GetMapping("/category/search-by-category")
-    public String searchByCategory(@RequestParam String category, Model model) {
-        List<Category> searchCategory = categoryRepository.findByName(category);
-        List<Recipe> results = recipeRepository.findAllByCategories(searchCategory);
+    public String searchByCategory(@RequestParam(required = false) String category, Model model) {
+        List<Recipe> results = new ArrayList<>();
+        String errorMessage = null;
+
+        if (category != null && !category.isEmpty()) {
+            List<Category> searchCategory = categoryRepository.findByName(category);
+
+            if (!searchCategory.isEmpty()) {
+                results = recipeRepository.findAllByCategories(searchCategory);
+                if (results.isEmpty()) {
+                    errorMessage = "This category does not contain any recipes";
+                } else {
+                    model.addAttribute("searchCategory", searchCategory.get(0));
+                }
+            } else {
+                errorMessage = "This category does not contain any recipes";
+            }
+        } else {
+            errorMessage = "This category does not exist or there was no category selected";
+        }
 
         model.addAttribute("recipes", results);
-        model.addAttribute("searchCategory", searchCategory.get(0));
         model.addAttribute("allCategories", categoryRepository.findAll());
+        model.addAttribute("errorMessage", errorMessage);
 
         return "recipesPerCategory";
     }
