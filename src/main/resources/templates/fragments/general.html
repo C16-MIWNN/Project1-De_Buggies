@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="baseheader(title)">
     <meta charset="UTF-8">
     <title th:replace="${title}">This is the base title</title>
@@ -16,7 +16,7 @@
 <body>
 
 <div th:fragment="colormode">
-    <div class="form-check-switch mx-4 d-flex align-items-center justify-content-end">
+    <div class="form-check-switch">
         <input
                 type="checkbox"
                 id="flexSwitchCheckChecked"

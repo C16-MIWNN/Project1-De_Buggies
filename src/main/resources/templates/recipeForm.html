@@ -11,8 +11,9 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col">
-            <h1>New Recipe Form</h1>
-            <form th:action="@{/recipe/new}" method="post" th:object="${formRecipe}">
+            <h1 th:text="${name} ? 'Edit Recipe' : 'New Recipe Form'"></h1>
+            <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}">
+                <input type="hidden" th:field="*{recipeId}" />
                 <table>
                     <tr>
                         <td>Recipe Name</td>

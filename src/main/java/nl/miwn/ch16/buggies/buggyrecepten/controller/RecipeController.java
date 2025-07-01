@@ -47,9 +47,9 @@ public class RecipeController {
         return "homePage";
     }
 
-    @GetMapping("/recipe/detail/{recipeId}")
-    private String showRecipeDetails(@PathVariable("recipeId") Long recipeId, Model datamodel) {
-        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+    @GetMapping("/recipe/detail/{name}")
+    private String showRecipeDetails(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
 
         if (recipeOptional.isPresent()) {
             Recipe recipe = recipeOptional.get();
@@ -82,10 +82,10 @@ public class RecipeController {
         datamodel.addAttribute("formRecipe", new Recipe());
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
 
-        return "newRecipeForm";
+        return "recipeForm";
     }
 
-    @PostMapping("/recipe/new")
+    @PostMapping("/recipe/save")
     private String saveOrUpdateRecipe(@ModelAttribute("formDesign") Recipe recipeToBeSaved,
                                       @RequestParam List<Long> categories,
                                       BindingResult bindingResult){
@@ -98,6 +98,29 @@ public class RecipeController {
 
         recipeRepository.save(recipeToBeSaved);
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/recipe/edit/{name}")
+    private String editRecipe(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
+
+        if (recipeOptional.isPresent()) {
+            Recipe recipe = recipeOptional.get();
+            datamodel.addAttribute("formRecipe", recipe);
+            datamodel.addAttribute("allCategories", categoryRepository.findAll());
+            return "recipeForm";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/recipe/delete/{recipeId}")
+    private String deleteRecipe(@PathVariable("recipeId") Long recipeId) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+        if (recipeOptional.isPresent()) {
+            recipeRepository.deleteById(recipeId);
+        }
 
         return "redirect:/";
     }

@@ -7,7 +7,7 @@
 <body>
 
 <div th:if="${errorMessage == null}">
-    <div th:fragment="categoryCard(category)" th:each="category : ${allCategories}">
+    <div th:fragment="categoryCard(category)">
         <div class="card recipe-card">
             <a th:href="@{/category/search-by-category(category=${category.name})}">
                 <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg" class="card-img-top" alt="image alt">
