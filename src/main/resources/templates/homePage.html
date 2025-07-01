@@ -41,13 +41,13 @@
         <div class="col-2">
             <ul sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="list-group-item">
-                    <a th:href="@{/recipe/new}" class="btn btn-search-form">Add new recipe</a>
+                    <a th:href="@{/recipe/new}" class="btn action-btn">Add new recipe</a>
                 </li>
                 <li class="list-group-item">
-                    <a th:href="@{/category/new}" class="btn btn-search-form">Add category</a>
+                    <a th:href="@{/category/new}" class="btn action-btn">Add category</a>
                 </li>
                 <li class="list-group-item">
-                    <a th:href="@{/ingredient/new}" class="btn btn-search-form">Add ingredient</a>
+                    <a th:href="@{/ingredient/new}" class="btn action-btn">Add ingredient</a>
                 </li>
             </ul>
         </div>

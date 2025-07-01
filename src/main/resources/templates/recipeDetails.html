@@ -25,7 +25,7 @@
                                 </button>
                             </form>
                         </div>
-                        <p th:each="step, stat : ${recipeToBeShown.getListOfRecipeSteps()}" th:text="|step ${stat.index + 1}. ${step}|"></p>
+                        <div th:replace="~{fragments/recipe :: recipeStepsCard(${recipeToBeShown.getListOfRecipeSteps()})}"></div>
 
                         <p th:each="ingredient, stat : ${recipeToBeShown.getListOfIngredients()}" th:text="|ingredient ${stat.index + 1}. ${ingredient}|"></p>
 

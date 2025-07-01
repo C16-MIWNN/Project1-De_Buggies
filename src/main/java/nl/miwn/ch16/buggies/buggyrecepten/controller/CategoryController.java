@@ -67,7 +67,7 @@ public class CategoryController {
 
         if (isCategoryGiven(category)) {
             List<Category> searchCategory = categoryRepository.findByName(category);
-            errorMessage = handleSearchCategory(searchCategory, results, model);
+            errorMessage = checkSearchCategory(searchCategory, results, model);
         } else {
             errorMessage = Optional.of(CATEGORY_NOT_FOUND_MESSAGE);
         }
@@ -80,7 +80,7 @@ public class CategoryController {
         return category != null && !category.isEmpty();
     }
 
-    private Optional<String> handleSearchCategory(List<Category> searchCategory, List<Recipe> results, Model model) {
+    private Optional<String> checkSearchCategory(List<Category> searchCategory, List<Recipe> results, Model model) {
         if (!searchCategory.isEmpty()) {
             results.addAll(recipeRepository.findAllByCategories(searchCategory));
             if (results.isEmpty()) {

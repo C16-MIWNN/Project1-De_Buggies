@@ -100,10 +100,41 @@ a:hover {
     width: 18vw;
 }
 
+/*recipe steps card*/
+.card-recipesteps-title {
+    font-size: 30px;
+}
+
+.card-recipesteps:hover {
+    transition: none;
+    transform: none;
+    box-shadow: none;
+}
+
 /*action button*/
 a.action-btn {
+    background-color: #37A736;
     color: white;
-    font-size: 2rem;
+    font-size: 1rem;
+    margin: 3px;
+}
+
+[data-bs-theme="dark"] a.action-btn {
+    background-color: #c9f3ba;
+    color: #1f881e;
+    font-size: 1rem;
+}
+
+a.action-btn:hover {
+    background-color: #b3e2a6;
+    color: #155d12;
+    font-size: 1rem;
+}
+
+[data-bs-theme="dark"] a.action-btn:hover {
+    background-color: #b3e2a6;
+    color: #155d12;
+    font-size: 1rem;
 }
 
 /*category button in cards*/

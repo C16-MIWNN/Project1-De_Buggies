@@ -26,5 +26,18 @@
         </div>
     </div>
 </div>
+
+<div th:fragment="recipeStepsCard(recipeSteps)">
+    <div class="card card-recipesteps">
+        <div class="card-header card-recipesteps-title">Instructions</div>
+        <div class="card-text">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" th:each="recipeStep, i : ${recipeSteps}" th:text="|step ${i.index + 1}: ${recipeStep}|">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

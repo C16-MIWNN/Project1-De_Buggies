@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col">
-            <h1 class="justify-content-end" th:if="${searchCategory != null}" th:text="${searchCategory.name}"></h1>
+            <h1 class="justify-content-end" th:if="${searchCategory != null}" th:text="|${searchCategory.name} Recipes|"></h1>
             <h1 class="justify-content-end" th:if="${searchCategory == null}"></h1>
         </div>
     </div>
