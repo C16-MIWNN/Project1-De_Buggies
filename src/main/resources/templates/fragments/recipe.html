@@ -39,5 +39,16 @@
     </div>
 </div>
 
+<div th:fragment="recipeIngredientsCard(recipIngredients)">
+    <div class="card card-recipesteps">
+        <div class="card-header card-recipesteps-title">Ingredients</div>
+        <div class="card-text">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" th:each="recipeIngredient : ${recipIngredients}" th:text="${recipeIngredient}"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

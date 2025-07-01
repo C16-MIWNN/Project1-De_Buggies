@@ -12,31 +12,49 @@
         <div class="col-2"></div>
         <div class="col">
             <div class="recipe-details" th:object="${recipeToBeShown}">
-                <div>
-                    <div>
-                        <div class="d-flex align-items-center">
-                            <h1 class="mb-0 me-2" th:text="${recipeToBeShown.name}">Recipe Name</h1>
-                            <form class="m-0 p-0 align-self-end" th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}">
-                                <input type="hidden" th:field="*{recipeId}" />
-                                <button type="submit"
-                                        class="btn btn-link p-0 m-0 align-baseline"
-                                        style="font-size: inherit; line-height: inherit; text-decoration: none; position: relative;">
-                                    <i th:class="${recipeToBeShown.favorite} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div th:replace="~{fragments/recipe :: recipeStepsCard(${recipeToBeShown.getListOfRecipeSteps()})}"></div>
-
-                        <p th:each="ingredient, stat : ${recipeToBeShown.getListOfIngredients()}" th:text="|ingredient ${stat.index + 1}. ${ingredient}|"></p>
-
-                        <p th:each="categorie, stat : ${recipeToBeShown.categories}" th:text="|categorie ${stat.index + 1}. ${categorie}|"></p>
-
-                        <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}">Edit</a>
-                        <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipeToBeShown.recipeId})}">Delete</a>
+                <div class="row align-items-start mb-4">
+                    <div class="col-md-4">
+                        <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg" alt="Recipe Image" class="img-fluid rounded-2" />
                     </div>
+
+                    <div class="col-md-4 d-flex align-items-center">
+                        <h1 class="mb-0 me-3" th:text="${recipeToBeShown.name}">Recipe Name</h1>
+                        <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}" class="m-0 p-0">
+                            <input type="hidden" th:field="*{recipeId}" />
+                            <button type="submit" class="btn btn-link p-0 m-0">
+                                <i th:class="${recipeToBeShown.favorite} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="col-md-4 text-end">
+                        <h5>Categories</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li th:each="categorie : ${recipeToBeShown.categories}" th:text="${categorie.name}"></li>
+                        </ul>
+                    </div>
+
                 </div>
 
+                <div class="row">
+                    <div class="col-md-4">
+                        <div th:replace="~{fragments/recipe :: recipeIngredientsCard(${recipeToBeShown.getListOfIngredients()})}"></div>
+                    </div>
+                    <div class="col-md-8">
+                        <div th:replace="~{fragments/recipe :: recipeStepsCard(${recipeToBeShown.getListOfRecipeSteps()})}"></div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="col-2">
+            <ul>
+                <li class="list-group-item">
+                    <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}" class="btn action-btn">Edit</a>
+                </li>
+                <li class="list-group-item">
+                    <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipeToBeShown.recipeId})}" class="btn action-btn">Delete</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
