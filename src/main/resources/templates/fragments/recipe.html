@@ -20,7 +20,7 @@
         </a>
 
         <div class="card-text">
-            <a th:each="category : ${recipe.categories}" href="#" class="btn btn-primary category-btn" th:text="${category}"></a>
+            <a th:each="category : ${recipe.categories}" th:href="@{/category/search-by-category(category=${category.name})}" class="btn btn-primary category-btn" th:text="${category}"></a>
             <br>
             <a class="card-title" th:href="@{/recipe/detail/{name}(name = ${recipe.name})}" th:text="${recipe.getName()}"></a>
         </div>

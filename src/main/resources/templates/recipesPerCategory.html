@@ -23,8 +23,8 @@
             <div th:replace="~{fragments/category :: category-search(${allCategories})}"></div>
         </div>
         <div class="col">
+            <div th:if="${errorMessage}" class="alert alert-warning" th:text="${errorMessage}"></div>
             <div class="row row-cols-3  g-3">
-                <div th:if="${errorMessage}" class="alert alert-warning" role="alert" th:text="${errorMessage}"></div>
                 <div th:each="recipe : ${recipes}" class="col">
                     <div th:replace="~{fragments/recipe :: recipeCard(${recipe})}"></div>
                 </div>
