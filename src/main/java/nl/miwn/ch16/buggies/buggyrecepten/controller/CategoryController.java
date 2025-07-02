@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +24,8 @@ import java.util.Optional;
 @Controller
 public class CategoryController {
 
+    public static final String NO_RECIPES_IN_CATEGORY_MESSAGE = "This category does not contain any recipes";
+    public static final String CATEGORY_NOT_FOUND_MESSAGE = "This category does not exist or there was no category selected";
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
 
@@ -62,29 +63,39 @@ public class CategoryController {
     @GetMapping("/category/search-by-category")
     public String searchByCategory(@RequestParam(required = false) String category, Model model) {
         List<Recipe> results = new ArrayList<>();
-        String errorMessage = null;
+        Optional<String> errorMessage;
 
-        if (category != null && !category.isEmpty()) {
+        if (isCategoryGiven(category)) {
             List<Category> searchCategory = categoryRepository.findByName(category);
-
-            if (!searchCategory.isEmpty()) {
-                results = recipeRepository.findAllByCategories(searchCategory);
-                if (results.isEmpty()) {
-                    errorMessage = "This category does not contain any recipes";
-                } else {
-                    model.addAttribute("searchCategory", searchCategory.get(0));
-                }
-            } else {
-                errorMessage = "This category does not contain any recipes";
-            }
+            errorMessage = checkSearchCategory(searchCategory, results, model);
         } else {
-            errorMessage = "This category does not exist or there was no category selected";
+            errorMessage = Optional.of(CATEGORY_NOT_FOUND_MESSAGE);
         }
 
+        setupCategoryDetail(model, results, errorMessage);
+        return "recipesPerCategory";
+    }
+
+    private boolean isCategoryGiven(String category) {
+        return category != null && !category.isEmpty();
+    }
+
+    private Optional<String> checkSearchCategory(List<Category> searchCategory, List<Recipe> results, Model model) {
+        if (!searchCategory.isEmpty()) {
+            results.addAll(recipeRepository.findAllByCategories(searchCategory));
+            if (results.isEmpty()) {
+                return Optional.of(NO_RECIPES_IN_CATEGORY_MESSAGE);
+            } else {
+                model.addAttribute("searchCategory", searchCategory.get(0));
+                return Optional.empty();
+            }
+        }
+        return Optional.of(NO_RECIPES_IN_CATEGORY_MESSAGE);
+    }
+
+    private void setupCategoryDetail(Model model, List<Recipe> results, Optional<String> errorMessage) {
         model.addAttribute("recipes", results);
         model.addAttribute("allCategories", categoryRepository.findAll());
-        model.addAttribute("errorMessage", errorMessage);
-
-        return "recipesPerCategory";
+        model.addAttribute("errorMessage", errorMessage.orElse(null));
     }
 }
