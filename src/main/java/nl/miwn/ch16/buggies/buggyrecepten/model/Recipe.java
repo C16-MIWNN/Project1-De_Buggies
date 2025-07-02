@@ -90,4 +90,12 @@ public class Recipe {
     public String toString() {
         return String.format(this.name);
     }
+
+    public Set<AdminUser> getFavoritedByAdmins() {
+        return favoritedByAdmins;
+    }
+
+    public void setFavoritedByAdmins(Set<AdminUser> favoritedByAdmins) {
+        this.favoritedByAdmins = favoritedByAdmins;
+    }
 }
