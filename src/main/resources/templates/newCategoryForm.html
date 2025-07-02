@@ -11,18 +11,7 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col">
-            <h1>New Category Form</h1>
-            <form th:action="@{/category/new}" method="post" th:object="${formCategory}">
-                <table>
-                    <tr>
-                        <td>Category Name</td>
-                        <td><input type="text" th:field="*{name}"></td>
-                    </tr>
-                </table>
 
-                <input type="submit" value="Save Category"/>
-
-            </form>
         </div>
     </div>
 </div>

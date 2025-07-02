@@ -20,6 +20,43 @@
     </div>
 </div>
 
+<div th:fragment="formNewCategory(formCategory)">
+    <h1>New Category Form</h1>
+    <form th:action="@{/category/new}" method="post" th:object="${formCategory}">
+        <table>
+            <tr>
+                <td>Category Name</td>
+                <td><input type="text" th:field="*{name}"></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Save Category"/>
+
+    </form>
+</div>
+
+<div th:fragment="newCategoryModal(formCategory)">
+    <div class="modal fade" id="editForm" tabindex="-1" aria-labelledby="categoryFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="categoryFormModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div th:replace="~{fragments/category :: formNewCategory(${formCategory})}">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:unless="${formModalHidden}">
+        new bootstrap.Modal(document.getElementById('editForm'), {}).toggle()
+    </script>
+</div>
+
 <div th:fragment="category-search(allCategories)">
     <form action="/category/search-by-category" method="get" class="category-form">
         <p>Choose a category:</p>

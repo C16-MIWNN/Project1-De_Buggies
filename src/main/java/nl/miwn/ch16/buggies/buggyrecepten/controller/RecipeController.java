@@ -38,11 +38,13 @@ public class RecipeController {
     }
 
     @GetMapping({"/", "/homePage"})
-    private String showHomePage(Model datamodel) {
+    private String showHomePage(@ModelAttribute("formCategory") Category categoryToBeMade, Model datamodel) {
         List<Recipe> allRecipes = recipeRepository.findAll();
 
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
+        datamodel.addAttribute("formCategory", categoryToBeMade);
+        datamodel.addAttribute("formModalHidden", true);
 
         return "homePage";
     }
