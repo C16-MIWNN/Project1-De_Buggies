@@ -11,15 +11,16 @@ import java.util.*;
 
 @Entity
 public class Recipe {
-    
+
     @Id @GeneratedValue
     private Long recipeId;
 
     private String name;
     private boolean favorite;
+    private AdminUser creator;
 
-    private String recipeSteps;
-    private String ingredients;
+    private List<String> recipeStepsList;
+    private List<String> ingredientsList;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "recipe_category",
@@ -27,12 +28,9 @@ public class Recipe {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
 
-    public List<String> getListOfRecipeSteps() {
-        return Arrays.asList(this.recipeSteps.split(";"));
-    }
-
-    public List<String> getListOfIngredients() {
-        return Arrays.asList(this.ingredients.split(";"));
+    @Override
+    public String toString() {
+        return String.format(this.name);
     }
 
     public Long getRecipeId() {
@@ -59,14 +57,6 @@ public class Recipe {
         this.favorite = favorite;
     }
 
-    public String getRecipeSteps() {
-        return recipeSteps;
-    }
-
-    public void setRecipeSteps(String recipeSteps) {
-        this.recipeSteps = recipeSteps;
-    }
-
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
@@ -75,16 +65,29 @@ public class Recipe {
         return categories;
     }
 
-    public String getIngredients() {
-        return ingredients;
+
+
+    public List<String> getRecipeStepsList() {
+        return recipeStepsList;
     }
 
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
+    public void setRecipeStepsList(List<String> recipeStepsList) {
+        this.recipeStepsList = recipeStepsList;
     }
 
-    @Override
-    public String toString() {
-        return String.format(this.name);
+    public List<String> getIngredientsList() {
+        return ingredientsList;
+    }
+
+    public void setIngredientsList(List<String> ingredientsList) {
+        this.ingredientsList = ingredientsList;
+    }
+
+    public AdminUser getCreator() {
+        return creator;
+    }
+
+    public void setCreator(AdminUser creator) {
+        this.creator = creator;
     }
 }

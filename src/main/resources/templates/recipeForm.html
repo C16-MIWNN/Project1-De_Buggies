@@ -12,49 +12,89 @@
         <div class="col-2"></div>
         <div class="col">
             <h1 th:text="${name} ? 'Edit Recipe' : 'New Recipe Form'"></h1>
-            <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}">
+            <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}" id="recipeForm">
                 <input type="hidden" th:field="*{recipeId}" />
+                <input type="hidden" th:field="*{creator}" />
+
                 <table>
                     <tr>
                         <td>Recipe Name</td>
                         <td><input type="text" th:field="*{name}"></td>
                     </tr>
+
                     <tr>
-                        <td>Recipe steps</td>
-                        <td>Seperate the steps with a ;</td>
-                        <td><input type="text" th:field="*{recipeSteps}"></td>
+                        <!-- Step Inputs -->
+                        <div id="stepsContainer">
+                            <!-- Existing steps rendered with Thymeleaf -->
+                            <div th:each="step, iStat : *{recipeStepsList}">
+                                <input type="text" th:field="*{recipeStepsList[__${iStat.index}__]}" />
+                            </div>
+                        </div>
+                        <button type="button" id="addStep">Add Step</button>
+
+                        <!-- Ingredient Inputs -->
+                        <div id="ingredientsContainer">
+                            <!-- Existing ingredients rendered with Thymeleaf -->
+                            <div th:each="ingredient, iStat : *{ingredientsList}">
+                                <input type="text" th:field="*{ingredientsList[__${iStat.index}__]}" />
+                            </div>
+                        </div>
+                        <button type="button" id="addIngredient">Add Ingredient</button>
                     </tr>
-                    <tr>
-                        <td>Ingredients</td>
-                        <td>Seperate the ingredients with a ;</td>
-                        <td><input type="text" th:field="*{ingredients}"></td>
-                    </tr>
+
                     <tr>
                         <td>Favorite</td>
                         <td><input type="checkbox" th:field="*{favorite}"></td>
                     </tr>
+
                     <tr>
                         <td>Recipe category</td>
                         <td>
                             <select th:field="*{categories}" multiple>
-                            <option th:each="category : ${allCategories}"
-                                    th:text="${category.name}"
-                                    th:value="${category.categoryId}">
-                            </option>
+                                <option th:each="category : ${allCategories}"
+                                        th:text="${category.name}"
+                                        th:value="${category.categoryId}">
+                                </option>
                             </select>
                         </td>
                     </tr>
                 </table>
 
                 <input type="submit" value="Save Recipe" />
-
             </form>
         </div>
     </div>
 </div>
 
+<script>
+    // Initialize based on existing field count
+    let stepCount = document.querySelectorAll('#stepsContainer input').length;
+    let ingredientCount = document.querySelectorAll('#ingredientsContainer input').length;
+
+    document.getElementById('addStep').addEventListener('click', function () {
+        const container = document.getElementById('stepsContainer');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = `recipeStepsList[${stepCount}]`;  // Indexed input
+        container.appendChild(document.createElement('br'));
+        container.appendChild(input);
+        stepCount++;
+    });
+
+    document.getElementById('addIngredient').addEventListener('click', function () {
+        const container = document.getElementById('ingredientsContainer');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = `ingredientsList[${ingredientCount}]`;  // Indexed input
+        container.appendChild(document.createElement('br'));
+        container.appendChild(input);
+        ingredientCount++;
+    });
+</script>
+
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomscripts}"></div>
+
 
 
 </body>

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -56,13 +57,13 @@ public class InitializeController {
         toast.setName("Toast");
         pasta.setName("Pasta");
 
-        eggs.setRecipeSteps("cook egg");
-        toast.setRecipeSteps("toast bread");
-        pasta.setRecipeSteps("boil pasta");
+        eggs.setRecipeStepsList(Arrays.asList("boil water", "cook egg"));
+        toast.setRecipeStepsList(Arrays.asList("get bread", "toast bread"));
+        pasta.setRecipeStepsList(Arrays.asList("boil water", "cook pasta"));
 
-        eggs.setIngredients("egg");
-        toast.setIngredients("bread");
-        pasta.setIngredients("spaghetti");
+        eggs.setIngredientsList(Arrays.asList("water", "egg"));
+        toast.setIngredientsList(Arrays.asList("water", "bread"));
+        pasta.setIngredientsList(Arrays.asList("water", "spaghetti"));
 
         recipeRepository.saveAll(List.of(eggs, toast, pasta));
     }
