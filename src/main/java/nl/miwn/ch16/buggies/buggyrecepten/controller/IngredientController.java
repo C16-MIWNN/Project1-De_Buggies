@@ -23,13 +23,6 @@ public class IngredientController {
         this.ingredientRepository = ingredientRepository;
     }
 
-    @GetMapping("/ingredient/new")
-    private String showNewIngredientForm(Model datamodel) {
-        datamodel.addAttribute("formIngredient", new Ingredient());
-
-        return "newIngredientForm";
-    }
-
     @PostMapping("/ingredient/new")
     private String saveOrUpdateIngredient(@ModelAttribute("formDesign") Ingredient ingredientToBeSaved,
                                       BindingResult bindingResult){
