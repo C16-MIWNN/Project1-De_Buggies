@@ -236,3 +236,7 @@ form.category-form div {
     color: #155d12;
     box-shadow: none;
 }
+
+html {
+    overflow-y: scroll;
+}

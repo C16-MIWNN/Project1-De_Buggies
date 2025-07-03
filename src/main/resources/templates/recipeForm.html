@@ -23,18 +23,14 @@
                     </tr>
 
                     <tr>
-                        <!-- Step Inputs -->
                         <div id="stepsContainer">
-                            <!-- Existing steps rendered with Thymeleaf -->
                             <div th:each="step, iStat : *{recipeStepsList}">
                                 <input type="text" th:field="*{recipeStepsList[__${iStat.index}__]}" />
                             </div>
                         </div>
                         <button type="button" id="addStep">Add Step</button>
 
-                        <!-- Ingredient Inputs -->
                         <div id="ingredientsContainer">
-                            <!-- Existing ingredients rendered with Thymeleaf -->
                             <div th:each="ingredient, iStat : *{ingredientsList}">
                                 <input type="text" th:field="*{ingredientsList[__${iStat.index}__]}" />
                             </div>
@@ -62,25 +58,39 @@
 </div>
 
 <script>
-    // Initialize based on existing field count
-    let stepCount = document.querySelectorAll('#stepsContainer input').length;
-    let ingredientCount = document.querySelectorAll('#ingredientsContainer input').length;
+    function ensureAtLeastOneField(containerId, baseName, count) {
+        const container = document.getElementById(containerId);
+        if (!container.querySelector('input')) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = `${baseName}[0]`;
+            container.appendChild(input);
+        }
+        return container.querySelectorAll('input').length;
+    }
 
-    document.getElementById('addStep').addEventListener('click', function () {
+    // Initialize stepCount and ingredientCount based on existing inputs or create one if none
+    let stepCount = ensureAtLeastOneField('stepsContainer', 'recipeStepsList', 0);
+    let ingredientCount = ensureAtLeastOneField('ingredientsContainer', 'ingredientsList', 0);
+
+    document.getElementById('addStep').addEventListener('click', function (e) {
+        e.preventDefault(); // prevent form submission if button is inside form
         const container = document.getElementById('stepsContainer');
         const input = document.createElement('input');
         input.type = 'text';
-        input.name = `recipeStepsList[${stepCount}]`;  // Indexed input
+        input.name = `recipeStepsList[${stepCount}]`;
+        input.className = 'form-label';
         container.appendChild(document.createElement('br'));
         container.appendChild(input);
         stepCount++;
     });
 
-    document.getElementById('addIngredient').addEventListener('click', function () {
+    document.getElementById('addIngredient').addEventListener('click', function (e) {
+        e.preventDefault();
         const container = document.getElementById('ingredientsContainer');
         const input = document.createElement('input');
         input.type = 'text';
-        input.name = `ingredientsList[${ingredientCount}]`;  // Indexed input
+        input.name = `ingredientsList[${ingredientCount}]`;
         container.appendChild(document.createElement('br'));
         container.appendChild(input);
         ingredientCount++;
