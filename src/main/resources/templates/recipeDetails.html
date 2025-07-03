@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
     <title>Recipe Details</title>
 </head>
@@ -22,7 +22,7 @@
                         <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}" class="m-0 p-0">
                             <input type="hidden" th:field="*{recipeId}" />
                             <button type="submit" class="btn btn-link p-0 m-0">
-                                <i th:class="${recipeToBeShown.favorite} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
+                                <i th:class="${recipeFavorited} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
                             </button>
                         </form>
                     </div>
@@ -38,16 +38,16 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <div th:replace="~{fragments/recipe :: recipeIngredientsCard(${recipeToBeShown.getListOfIngredients()})}"></div>
+                        <div th:replace="~{fragments/recipe :: recipeIngredientsCard(${recipeToBeShown.getRecipeStepsList()})}"></div>
                     </div>
                     <div class="col-md-8">
-                        <div th:replace="~{fragments/recipe :: recipeStepsCard(${recipeToBeShown.getListOfRecipeSteps()})}"></div>
+                        <div th:replace="~{fragments/recipe :: recipeStepsCard(${recipeToBeShown.getIngredientsList()})}"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-2">
-            <ul>
+            <ul sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="list-group-item">
                     <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}" class="btn action-btn">Edit</a>
                 </li>
