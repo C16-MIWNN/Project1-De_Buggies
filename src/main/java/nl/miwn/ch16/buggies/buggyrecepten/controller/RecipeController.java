@@ -33,7 +33,8 @@ public class RecipeController {
 
     public RecipeController(RecipeRepository recipeRepository,
                             CategoryRepository categoryRepository,
-                            NewRecipeService newRecipeService) {
+                            NewRecipeService newRecipeService,
+                            AdminUserRepository adminUserRepository) {
 
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
