@@ -161,7 +161,7 @@ a.delete-btn {
 }
 
 a.delete-btn:hover {
-    background-color: white;
+    background-color: pink;
     color: red;
     font-size: 1rem;
 }
