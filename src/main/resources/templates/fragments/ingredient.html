@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingredient fragments</title>
+</head>
+<body>
+
+<div th:fragment="formNewIngredient(formIngredient)">
+    <form th:action="@{/ingredient/new}" method="post" th:object="${formIngredient}">
+        <table>
+            <tr>
+                <td>Ingredient Name</td>
+                <td><input type="text" th:field="*{name}"></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Save Ingredient"/>
+
+    </form>
+</div>
+
+<div th:fragment="newIngredientModal(formIngredient)">
+    <div class="modal fade" id="editFormIngredient" tabindex="-1" aria-labelledby="ingredientFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ingredientFormModalLabel">New Ingredient</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div th:replace="~{fragments/ingredient :: formNewIngredient(${formIngredient})}">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:unless="${formModalHidden}">
+    new bootstrap.Modal(document.getElementById('editForm'), {}).toggle()
+</script>
+</div>
+</body>
+</html>

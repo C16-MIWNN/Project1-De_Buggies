@@ -13,14 +13,15 @@
         <div class="col">
             <h1>Welcome back <span sec:authentication="name"></span>!</h1>
 
-            <table>
-                <tr>
-                    <th>Favorite recipes</th>
-                </tr>
-                <tr>
-                    <td th:each="recipe : ${favoriteRecipe}" th:text="${recipe.name}">Recipe</td>
-                </tr>
-            </table>
+            <h2>Your favorite recipes</h2>
+
+            <div class="row row-cols-3  g-3">
+                <div th:each="recipe : ${favoriteRecipe}" class="col">
+                    <div th:replace="~{fragments/recipe :: recipeCard(${recipe})}"></div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>

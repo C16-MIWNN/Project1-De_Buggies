@@ -34,13 +34,6 @@ public class CategoryController {
         this.recipeRepository = recipeRepository;
     }
 
-    @GetMapping("/category/new")
-    private String showNewRecipeForm(Model datamodel) {
-        datamodel.addAttribute("formCategory", new Category());
-
-        return "newCategoryForm";
-    }
-
     @PostMapping("/category/new")
     private String saveOrUpdateRecipe(@ModelAttribute("formDesign") Category categoryToBeSaved,
                                       BindingResult bindingResult){
