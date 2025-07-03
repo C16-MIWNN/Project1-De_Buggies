@@ -16,7 +16,6 @@ public class Recipe {
     private Long recipeId;
 
     private String name;
-    private boolean favorite;
     private AdminUser creator;
 
     private List<String> recipeStepsList;
@@ -52,22 +51,6 @@ public class Recipe {
         this.name = name;
     }
 
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
-    public String getRecipeSteps() {
-        return recipeSteps;
-    }
-
-    public void setRecipeSteps(String recipeSteps) {
-        this.recipeSteps = recipeSteps;
-    }
-
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
@@ -75,8 +58,6 @@ public class Recipe {
     public List<Category> getCategories() {
         return categories;
     }
-
-
 
     public List<String> getRecipeStepsList() {
         return recipeStepsList;
