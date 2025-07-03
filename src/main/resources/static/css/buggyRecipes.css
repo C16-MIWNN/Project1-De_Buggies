@@ -119,6 +119,18 @@ a:hover {
     box-shadow: none;
 }
 
+/*recipe ingredient card*/
+.card-recipeingredients-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-recipeingredients:hover {
+    transition: none;
+    transform: none;
+    box-shadow: none;
+}
+
 /*action button*/
 a.action-btn {
     background-color: #37A736;
