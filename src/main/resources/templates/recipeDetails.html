@@ -52,7 +52,7 @@
                     <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}" class="btn action-btn">Edit</a>
                 </li>
                 <li class="list-group-item">
-                    <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipeToBeShown.recipeId})}" class="btn action-btn">Delete</a>
+                    <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipeToBeShown.recipeId})}" class="btn delete-btn">Delete</a>
                 </li>
             </ul>
         </div>

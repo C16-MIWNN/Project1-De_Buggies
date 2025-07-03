@@ -145,6 +145,33 @@ a.action-btn:hover {
     font-size: 1rem;
 }
 
+/*delete button*/
+
+a.delete-btn {
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+    margin: 3px;
+}
+[data-bs-theme="dark"] a.delete-btn {
+    background-color: white;
+    color: red;
+    font-size: 1rem;
+    margin: 3px;
+}
+
+a.delete-btn:hover {
+    background-color: white;
+    color: red;
+    font-size: 1rem;
+}
+
+[data-bs-theme="dark"] a.delete-btn:hover {
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+}
+
 /*category button in cards*/
 a.category-btn {
     color: white;
