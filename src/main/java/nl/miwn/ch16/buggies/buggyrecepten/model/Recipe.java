@@ -22,6 +22,9 @@ public class Recipe {
     private List<String> recipeStepsList;
     private List<String> ingredientsList;
 
+    @ManyToMany(mappedBy = "favoriteRecipes")
+    private Set<AdminUser> favoritedByAdmins = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
@@ -57,6 +60,14 @@ public class Recipe {
         this.favorite = favorite;
     }
 
+    public String getRecipeSteps() {
+        return recipeSteps;
+    }
+
+    public void setRecipeSteps(String recipeSteps) {
+        this.recipeSteps = recipeSteps;
+    }
+
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
@@ -89,5 +100,13 @@ public class Recipe {
 
     public void setCreator(AdminUser creator) {
         this.creator = creator;
+    }
+
+    public Set<AdminUser> getFavoritedByAdmins() {
+        return favoritedByAdmins;
+    }
+
+    public void setFavoritedByAdmins(Set<AdminUser> favoritedByAdmins) {
+        this.favoritedByAdmins = favoritedByAdmins;
     }
 }

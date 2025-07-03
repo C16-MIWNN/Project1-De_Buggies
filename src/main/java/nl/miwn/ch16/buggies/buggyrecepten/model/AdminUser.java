@@ -1,8 +1,9 @@
 package nl.miwn.ch16.buggies.buggyrecepten.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Marnix Ripke
@@ -17,6 +18,15 @@ public class AdminUser {
 
     private String name;
     private String password;
+
+    @ManyToMany
+    @JoinTable(
+            name = "adminuser_favorite_recipes",
+            joinColumns = @JoinColumn(name = "admin_id"),
+            inverseJoinColumns = @JoinColumn(name = "recipe_id")
+    )
+    private Set<Recipe> favoriteRecipes = new HashSet<>();
+
 
     public Long getAdminId() {
         return adminId;
@@ -40,5 +50,13 @@ public class AdminUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Recipe> getFavoriteRecipes() {
+        return favoriteRecipes;
+    }
+
+    public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
+        this.favoriteRecipes = favoriteRecipes;
     }
 }

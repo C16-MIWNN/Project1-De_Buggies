@@ -22,7 +22,7 @@
                         <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}" class="m-0 p-0">
                             <input type="hidden" th:field="*{recipeId}" />
                             <button type="submit" class="btn btn-link p-0 m-0">
-                                <i th:class="${recipeToBeShown.favorite} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
+                                <i th:class="${recipeFavorited} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
                             </button>
                         </form>
                     </div>
