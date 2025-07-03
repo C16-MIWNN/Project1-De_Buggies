@@ -27,7 +27,6 @@ public class Category {
     }
 
     public void setCategoryId(Long categoryId) {
-        categoryId = categoryId;
     }
 
     public String getName() {

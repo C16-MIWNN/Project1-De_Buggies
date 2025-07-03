@@ -17,9 +17,8 @@
                 <tr>
                     <th>Favorite recipes</th>
                 </tr>
-
-                <tr th:each="recipe : ${allFavorites}">
-                    <td th:text="${recipe}"></td>
+                <tr>
+                    <td th:each="recipe : ${favoriteRecipe}" th:text="${recipe.name}">Recipe</td>
                 </tr>
             </table>
         </div>

@@ -16,10 +16,12 @@ public class Recipe {
     private Long recipeId;
 
     private String name;
-    private boolean favorite;
 
     private String recipeSteps;
     private String ingredients;
+
+    @ManyToMany(mappedBy = "favoriteRecipes")
+    private Set<AdminUser> favoritedByAdmins = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "recipe_category",
@@ -51,14 +53,6 @@ public class Recipe {
         this.name = name;
     }
 
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
     public String getRecipeSteps() {
         return recipeSteps;
     }
@@ -86,5 +80,13 @@ public class Recipe {
     @Override
     public String toString() {
         return String.format(this.name);
+    }
+
+    public Set<AdminUser> getFavoritedByAdmins() {
+        return favoritedByAdmins;
+    }
+
+    public void setFavoritedByAdmins(Set<AdminUser> favoritedByAdmins) {
+        this.favoritedByAdmins = favoritedByAdmins;
     }
 }
