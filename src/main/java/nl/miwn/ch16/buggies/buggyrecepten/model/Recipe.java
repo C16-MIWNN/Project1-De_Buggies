@@ -16,6 +16,8 @@ public class Recipe {
     private Long recipeId;
 
     private String name;
+
+    @ManyToOne
     private AdminUser creator;
 
     private List<String> recipeStepsList;
