@@ -7,6 +7,7 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
+import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
@@ -25,7 +26,9 @@ public class RecipeController {
     private final CategoryRepository categoryRepository;
     private final NewRecipeService newRecipeService;
 
-    public RecipeController(RecipeRepository recipeRepository, CategoryRepository categoryRepository, NewRecipeService newRecipeService) {
+    public RecipeController(RecipeRepository recipeRepository,
+                            CategoryRepository categoryRepository,
+                            NewRecipeService newRecipeService) {
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.newRecipeService = newRecipeService;
@@ -38,12 +41,15 @@ public class RecipeController {
     }
 
     @GetMapping({"/", "/homePage"})
-    private String showHomePage(@ModelAttribute("formCategory") Category categoryToBeMade, Model datamodel) {
+    private String showHomePage(@ModelAttribute("formCategory") Category categoryToBeMade,
+                                @ModelAttribute("formIngredient") Ingredient ingredientToBeMade,
+                                Model datamodel) {
         List<Recipe> allRecipes = recipeRepository.findAll();
 
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", categoryToBeMade);
+        datamodel.addAttribute("formIngredient", ingredientToBeMade);
         datamodel.addAttribute("formModalHidden", true);
 
         return "homePage";

@@ -21,7 +21,6 @@
 </div>
 
 <div th:fragment="formNewCategory(formCategory)">
-    <h1>New Category Form</h1>
     <form th:action="@{/category/new}" method="post" th:object="${formCategory}">
         <table>
             <tr>
@@ -40,7 +39,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="categoryFormModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="categoryFormModalLabel">New Category</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

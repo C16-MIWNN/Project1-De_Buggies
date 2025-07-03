@@ -47,7 +47,7 @@
                     <a th:href="@{/category/new}" class="btn action-btn" data-bs-toggle="modal" data-bs-target="#editForm">Add category</a>
                 </li>
                 <li class="list-group-item">
-                    <a th:href="@{/ingredient/new}" class="btn action-btn">Add ingredient</a>
+                    <a th:href="@{/ingredient/new}" class="btn action-btn" data-bs-toggle="modal" data-bs-target="#editFormIngredient">Add ingredient</a>
                 </li>
             </ul>
         </div>
@@ -56,6 +56,7 @@
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomscripts}"></div>
 <div th:replace="~{fragments/category :: newCategoryModal(${formCategory})}"></div>
+<div th:replace="~{fragments/ingredient :: newIngredientModal(${formIngredient})}"></div>
 
 
 </body>
