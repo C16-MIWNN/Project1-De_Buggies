@@ -42,10 +42,10 @@ public class InitializeController {
     }
 
     private void initializeDB() {
+        loadAdminUsers();
         loadRecipes();
         loadIngredients();
-        loadCategories();   // <-- this now correctly links recipes and categories
-        loadAdminUsers();
+        loadCategories();
     }
 
     private void loadRecipes() {
@@ -64,6 +64,10 @@ public class InitializeController {
         eggs.setIngredientsList(Arrays.asList("water", "egg"));
         toast.setIngredientsList(Arrays.asList("water", "bread"));
         pasta.setIngredientsList(Arrays.asList("water", "spaghetti"));
+
+        eggs.setCreator(adminUserRepository.findByName("Billy").get());
+        toast.setCreator(adminUserRepository.findByName("Billy").get());
+        pasta.setCreator(adminUserRepository.findByName("Billy").get());
 
         recipeRepository.saveAll(List.of(eggs, toast, pasta));
     }

@@ -110,8 +110,14 @@ public class RecipeController {
 
 
     @GetMapping("/recipe/new")
-    private String showNewRecipeForm(Model datamodel) {
-        datamodel.addAttribute("formRecipe", new Recipe());
+    private String showNewRecipeForm(Model datamodel, Principal principal) {
+        Optional<AdminUser> currentUser = adminUserRepository.findByName(principal.getName());
+
+        Recipe formRecipe = new Recipe();
+
+        currentUser.ifPresent(formRecipe::setCreator);
+
+        datamodel.addAttribute("formRecipe", formRecipe);
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
 
         return "recipeForm";

@@ -126,6 +126,18 @@ a:hover {
     box-shadow: none;
 }
 
+/*recipe ingredient card*/
+.card-recipeingredients-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-recipeingredients:hover {
+    transition: none;
+    transform: none;
+    box-shadow: none;
+}
+
 /*action button*/
 a.edit-btn {
     background-color: #37A736;
@@ -278,4 +290,8 @@ form.category-form div {
     background-color: #b3e2a6;
     color: #155d12;
     box-shadow: none;
+}
+
+html {
+    overflow-y: scroll;
 }

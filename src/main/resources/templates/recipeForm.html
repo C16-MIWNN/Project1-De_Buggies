@@ -8,7 +8,7 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <div class="row">
+    <div class="row g-3">
         <div class="col-2"></div>
         <div class="col">
             <h1 th:text="${name} ? 'Edit Recipe' : 'New Recipe Form'"></h1>
@@ -16,73 +16,138 @@
                 <input type="hidden" th:field="*{recipeId}" />
                 <input type="hidden" th:field="*{creator}" />
 
-                <table>
-                    <tr>
-                        <td>Recipe Name</td>
-                        <td><input type="text" th:field="*{name}"></td>
-                    </tr>
+                <h5>Recipe Name</h5>
+                <input type="text" th:field="*{name}" class="form-control">
 
-                    <tr>
-                        <!-- Step Inputs -->
-                        <div id="stepsContainer">
-                            <!-- Existing steps rendered with Thymeleaf -->
-                            <div th:each="step, iStat : *{recipeStepsList}">
-                                <input type="text" th:field="*{recipeStepsList[__${iStat.index}__]}" />
-                            </div>
-                        </div>
-                        <button type="button" id="addStep">Add Step</button>
+                <h5>Instruction Steps</h5>
+                <div id="stepsContainer" class="flex-column"></div>
+                <button class="btn btn-search-form"  type="button" id="addStep">Add Step</button>
 
-                        <!-- Ingredient Inputs -->
-                        <div id="ingredientsContainer">
-                            <!-- Existing ingredients rendered with Thymeleaf -->
-                            <div th:each="ingredient, iStat : *{ingredientsList}">
-                                <input type="text" th:field="*{ingredientsList[__${iStat.index}__]}" />
-                            </div>
-                        </div>
-                        <button type="button" id="addIngredient">Add Ingredient</button>
-                    </tr>
+                <h5>Ingredients</h5>
+                <div id="ingredientsContainer" class="flex-column"></div>
+                <button class="btn btn-search-form" type="button" id="addIngredient">Add Ingredient</button>
 
-                    <tr>
-                        <td>Recipe category</td>
-                        <td>
-                            <select th:field="*{categories}" multiple>
-                                <option th:each="category : ${allCategories}"
-                                        th:text="${category.name}"
-                                        th:value="${category.categoryId}">
-                                </option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-
+                <h5>Recipe category</h5>
+                <select th:field="*{categories}" multiple>
+                    <option th:each="category : ${allCategories}"
+                            th:text="${category.name}"
+                            th:value="${category.categoryId}">
+                    </option>
+                </select>
                 <input type="submit" value="Save Recipe" />
             </form>
         </div>
+        <div class="col-2"></div>
     </div>
 </div>
 
 <script>
-    // Initialize based on existing field count
-    let stepCount = document.querySelectorAll('#stepsContainer input').length;
-    let ingredientCount = document.querySelectorAll('#ingredientsContainer input').length;
+    function ensureAtLeastOneField(containerId, baseName, typeName) {
+        const container = document.getElementById(containerId);
+        const existingInputs = container.querySelectorAll('input');
 
-    document.getElementById('addStep').addEventListener('click', function () {
+        if (existingInputs.length === 0) {
+            const containerField = document.createElement('div');
+            const input = document.createElement('input');
+            const text = document.createElement('span');
+
+            containerField.className = 'input-group mb-3';
+
+            input.type = 'text';
+            input.name = `${baseName}[0]`;
+            input.className = 'form-control';
+
+            text.className = 'input-group-text';
+            text.innerText = `${typeName} 1`;
+
+            containerField.appendChild(text);
+            containerField.appendChild(input);
+            container.appendChild(containerField);
+        }
+
+        return container.querySelectorAll('input').length;
+    }
+
+    function updateFields(container, baseName, label) {
+        container.querySelectorAll('input').forEach((input, index) => {
+            input.name = `${baseName}[${index}]`;
+            input.previousElementSibling.innerText = `${label} ${index + 1}`;
+        });
+    }
+
+    let recipeStepCount = ensureAtLeastOneField('stepsContainer', 'recipeStepsList', 'step', 0, );
+    let ingredientCount = ensureAtLeastOneField('ingredientsContainer', 'ingredientsList', 'ingredient', 0);
+
+    document.getElementById('addStep').addEventListener('click', function (e) {
+        e.preventDefault();
         const container = document.getElementById('stepsContainer');
         const input = document.createElement('input');
+        const text = document.createElement('span');
+        const containerField = document.createElement('div');
+        const removeBtn = document.createElement('button');
+
         input.type = 'text';
-        input.name = `recipeStepsList[${stepCount}]`;  // Indexed input
-        container.appendChild(document.createElement('br'));
-        container.appendChild(input);
-        stepCount++;
+        input.name = `recipeStepsList[${recipeStepCount}]`;
+        input.className = 'form-control';
+
+        text.className = 'input-group-text';
+        text.innerText = `step ${recipeStepCount + 1}`;
+
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'btn btn-outline-danger remove-button';
+
+        removeBtn.addEventListener('click', function () {
+            container.removeChild(containerField);
+            updateFields(container, 'recipeStepsList', 'Step');
+            recipeStepCount--;
+        });
+
+        containerField.className = 'input-group mb-3';
+        containerField.appendChild(text);
+        containerField.appendChild(input);
+        containerField.appendChild(removeBtn);
+
+        container.appendChild(containerField);
+
+        recipeStepCount++;
     });
 
-    document.getElementById('addIngredient').addEventListener('click', function () {
+    document.getElementById('addIngredient').addEventListener('click', function (e) {
+        e.preventDefault();
         const container = document.getElementById('ingredientsContainer');
+        const containerField = document.createElement('div')
         const input = document.createElement('input');
+        const text = document.createElement('span');
+        const removeBtn = document.createElement('button');
+
         input.type = 'text';
-        input.name = `ingredientsList[${ingredientCount}]`;  // Indexed input
-        container.appendChild(document.createElement('br'));
-        container.appendChild(input);
+        input.name = `ingredientsList[${ingredientCount}]`;
+
+        input.className = 'form-control';
+
+        text.className = 'input-group-text';
+        text.innerText = `ingredient ${ingredientCount + 1}`;
+
+
+
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'btn btn-outline-danger remove-button';
+
+        removeBtn.addEventListener('click', function () {
+            container.removeChild(containerField);
+            updateFields(container, 'ingredientsList', 'ingredient');
+            ingredientCount--;
+        });
+
+        containerField.className = 'input-group mb-3';
+        containerField.appendChild(text);
+        containerField.appendChild(input);
+        containerField.appendChild(removeBtn);
+
+        container.appendChild(containerField);
+
         ingredientCount++;
     });
 </script>
