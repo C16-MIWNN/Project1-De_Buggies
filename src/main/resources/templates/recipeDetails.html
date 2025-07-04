@@ -17,17 +17,19 @@
                         <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg"
                              alt="Recipe Image" class="img-fluid rounded-2"/>
                     </div>
-                    <div class="col-md-4 d-flex align-items-center">
-                        <h1 class="mb-0 me-3" th:text="${recipeToBeShown.name}">Recipe Name</h1>
-                        <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}"
-                              class="m-0 p-0">
-                            <input type="hidden" th:field="*{recipeId}"/>
-                            <button type="submit" class="btn btn-link p-0 m-0">
-                                <i th:class="${recipeFavorited} ? 'bi bi-star-fill' : 'bi bi-star'"
-                                   style="font-size: 1.5rem;"></i>
+                    <div class="col-md-4 d-flex">
+                        <div class="flex-column">
+                            <h1 class="mb-0 me-3" th:text="${recipeToBeShown.name}">Recipe Name</h1>
+                            <p th:text="|Created by: ${recipeToBeShown.creator.name}|"></p>
+                        </div>
+                        <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}" class="m-0 p-0">
+                            <input type="hidden" th:field="*{recipeId}" />
+                            <button type="submit" class="btn btn-link top-50 p-0 m-0">
+                                <i th:class="${recipeFavorited} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
                             </button>
                         </form>
                     </div>
+
                     <div class="col-md-4 text-end">
                         <h2>Categories</h2>
                         <ul class="list-unstyled mb-0">
