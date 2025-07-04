@@ -44,14 +44,12 @@
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link"
                            th:href="@{/user/profile}">
-                            Personal Page
+                            <span sec:authentication="name"></span>
                         </a>
-
-                    </li>
                     <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/logout}">Logout <span sec:authentication="name"></span></a>
+                        <a class="nav-link" th:href="@{/logout}">Logout</a>
                     </li>
                     <li class="nav-item">
                         <div th:replace="~{fragments/general :: colormode}"></div>
