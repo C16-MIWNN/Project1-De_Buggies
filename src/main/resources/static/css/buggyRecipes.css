@@ -42,22 +42,22 @@ a:hover {
     text-decoration: none;
 }
 
-[data-bs-theme="dark"]    a:link {
+[data-bs-theme="dark"] a:link {
     color: #c7f8b7;
     text-decoration: none;
 }
 
-[data-bs-theme="dark"]   a:visited {
+[data-bs-theme="dark"] a:visited {
     color: #c7f8b7;
     text-decoration: none;
 }
 
-[data-bs-theme="dark"]   a:active {
+[data-bs-theme="dark"] a:active {
     color: green;
     text-decoration: none;
 }
 
-[data-bs-theme="dark"]  a:hover {
+[data-bs-theme="dark"] a:hover {
     color: green;
     text-decoration: none;
 }
@@ -74,9 +74,16 @@ a:hover {
     font-weight: bold;
 }
 
-[data-bs-theme="dark"]   .nav-link:hover {
+[data-bs-theme="dark"] .nav-link:hover {
     color: green;
     text-decoration: none;
+}
+
+/*Nav-item alignment*/
+.nav-item > div {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 /*General card styling*/
@@ -132,28 +139,64 @@ a:hover {
 }
 
 /*action button*/
-a.action-btn {
+a.edit-btn {
     background-color: #37A736;
     color: white;
     font-size: 1rem;
     margin: 3px;
 }
 
-[data-bs-theme="dark"] a.action-btn {
+[data-bs-theme="dark"] a.edit-btn {
     background-color: #c9f3ba;
     color: #1f881e;
     font-size: 1rem;
 }
 
-a.action-btn:hover {
+a.edit-btn:hover {
     background-color: #b3e2a6;
     color: #155d12;
     font-size: 1rem;
 }
 
-[data-bs-theme="dark"] a.action-btn:hover {
-    background-color: #b3e2a6;
-    color: #155d12;
+[data-bs-theme="dark"] a.edit-btn:hover {
+    background-color: #155d12;
+    color: #b3e2a6;
+    font-size: 1rem;
+}
+
+/*delete button*/
+
+a.action-button {
+    display: inline-block;
+    width: 100px; /* or any fixed value, adjust as needed */
+    text-align: center;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+a.delete-btn {
+    background-color: red;
+    color: white;
+    font-size: 1rem;
+    margin: 3px;
+}
+
+[data-bs-theme="dark"] a.delete-btn {
+    background-color: lightpink;
+    color: red;
+    font-size: 1rem;
+    margin: 3px;
+}
+
+a.delete-btn:hover {
+    background-color: pink;
+    color: red;
+    font-size: 1rem;
+}
+
+[data-bs-theme="dark"] a.delete-btn:hover {
+    background-color: red;
+    color: lightpink;
     font-size: 1rem;
 }
 

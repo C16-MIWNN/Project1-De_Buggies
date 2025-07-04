@@ -14,33 +14,27 @@
             <div class="recipe-details" th:object="${recipeToBeShown}">
                 <div class="row align-items-start mb-4">
                     <div class="col-md-4">
-                        <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg" alt="Recipe Image" class="img-fluid rounded-2" />
+                        <img src="https://thescranline.com/wp-content/uploads/2023/01/HOW-TO-SOFT-BOIL-AN-EGG-WEB-01.jpg"
+                             alt="Recipe Image" class="img-fluid rounded-2"/>
                     </div>
-
-                    <div class="col-md-5 d-flex">
-                        <div class="flex-column">
-                            <h1 class="mb-0 me-3" th:text="${recipeToBeShown.name}">Recipe Name</h1>
-                            <p th:text="|Created by: ${recipeToBeShown.creator.name}|"></p>
-                        </div>
-                        <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}" class="m-0 p-0">
-                            <input type="hidden" th:field="*{recipeId}" />
-                            <button type="submit" class="btn btn-link top-50 p-0 m-0">
-                                <i th:class="${recipeFavorited} ? 'bi bi-star-fill' : 'bi bi-star'" style="font-size: 1.5rem;"></i>
+                    <div class="col-md-4 d-flex align-items-center">
+                        <h1 class="mb-0 me-3" th:text="${recipeToBeShown.name}">Recipe Name</h1>
+                        <form th:action="@{/recipe/favorite}" method="post" th:object="${recipeToBeShown}"
+                              class="m-0 p-0">
+                            <input type="hidden" th:field="*{recipeId}"/>
+                            <button type="submit" class="btn btn-link p-0 m-0">
+                                <i th:class="${recipeFavorited} ? 'bi bi-star-fill' : 'bi bi-star'"
+                                   style="font-size: 1.5rem;"></i>
                             </button>
                         </form>
                     </div>
-
-                    <div class="col-md-3 text-end">
-                        <h5>Categories</h5>
-                        <ul class="list-unstyled">
-                            <li th:each="category : ${recipeToBeShown.categories}">
-                                <a  th:href="@{/category/search-by-category(category=${category.name})}" class="btn btn-primary category-btn" th:text="${category}"></a>
-                            </li>
+                    <div class="col-md-4 text-end">
+                        <h2>Categories</h2>
+                        <ul class="list-unstyled mb-0">
+                            <li th:each="categorie : ${recipeToBeShown.categories}" th:text="${categorie.name}"></li>
                         </ul>
                     </div>
-
                 </div>
-
                 <div class="row">
                     <div class="col-md-4">
                         <div th:replace="~{fragments/recipe :: recipeIngredientsCard(${recipeToBeShown.getIngredientsList()})}"></div>
@@ -52,13 +46,20 @@
             </div>
         </div>
         <div class="col-2">
-            <ul sec:authorize="hasRole('ROLE_ADMIN')">
+            <ul class="btn-list" sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="list-group-item">
-                    <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}" class="btn action-btn">Edit</a>
+                    <a th:href="@{/recipe/edit/{name}(name = ${recipeToBeShown.name})}"
+                       class="btn edit-btn action-button">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
                 </li>
                 <li class="list-group-item">
-                    <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipeToBeShown.recipeId})}" class="btn action-btn">Delete</a>
+                    <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipeToBeShown.recipeId})}"
+                       class="btn delete-btn action-button">
+                        <i class="bi bi-trash3-fill"></i> Delete
+                    </a>
                 </li>
+
             </ul>
         </div>
     </div>
