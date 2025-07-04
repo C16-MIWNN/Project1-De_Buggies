@@ -1,0 +1,67 @@
+.slider-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+/* Hide native checkbox */
+.slider-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+/* The track */
+.slider-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 30px;
+    transition: background-color 0.4s;
+    cursor: pointer;
+}
+
+/* The knob */
+.slider-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: 24px;
+    width: 24px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* so clicks go to checkbox */
+    color: #1f881e; /* default sun color */
+    font-size: 16px;
+}
+
+/* When checked - move knob right and change track color */
+.slider-toggle input:checked + .slider-icon {
+    background-color: #212529;
+    border: 1px solid #b3e2a6;
+}
+
+.slider-toggle input:checked ~ .slider-knob {
+    transform: translateX(30px);
+    color: #b3e2a6; /* bright moon color */
+}
+
+/* Icon color for moon */
+.slider-toggle input:checked ~ .slider-knob i {
+    content: none;
+}
+
+/* The icon inside the knob */
+#knob-icon {
+    transition: color 0.3s;
+    color: #b3e2a6;
+}
