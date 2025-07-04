@@ -292,6 +292,9 @@ form.category-form div {
     box-shadow: none;
 }
 
+.footer {
+    margin-top: 175px;
+}
 html {
     overflow-y: scroll;
 }
