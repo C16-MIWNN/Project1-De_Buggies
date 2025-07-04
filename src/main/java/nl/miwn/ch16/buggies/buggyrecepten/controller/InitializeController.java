@@ -52,24 +52,29 @@ public class InitializeController {
         Recipe eggs = new Recipe();
         Recipe toast = new Recipe();
         Recipe pasta = new Recipe();
+        Recipe applepie = new Recipe();
 
         eggs.setName("Egg");
         toast.setName("Toast");
         pasta.setName("Pasta");
+        applepie.setName("Apple pie");
 
         eggs.setRecipeStepsList(Arrays.asList("boil water", "cook egg"));
         toast.setRecipeStepsList(Arrays.asList("get bread", "toast bread"));
         pasta.setRecipeStepsList(Arrays.asList("boil water", "cook pasta"));
+        applepie.setRecipeStepsList(Arrays.asList("make it", "bake it", "eat it"));
 
         eggs.setIngredientsList(Arrays.asList("water", "egg"));
         toast.setIngredientsList(Arrays.asList("water", "bread"));
         pasta.setIngredientsList(Arrays.asList("water", "spaghetti"));
+        applepie.setIngredientsList(Arrays.asList("apples", "sugar", "flour", "egg", "nutmeg", "cinnamon"));
 
         eggs.setCreator(adminUserRepository.findByName("Billy").get());
         toast.setCreator(adminUserRepository.findByName("Billy").get());
         pasta.setCreator(adminUserRepository.findByName("Billy").get());
+        applepie.setCreator(adminUserRepository.findByName("Harry").get());
 
-        recipeRepository.saveAll(List.of(eggs, toast, pasta));
+        recipeRepository.saveAll(List.of(eggs, toast, pasta, applepie));
     }
 
     private void loadIngredients() {
@@ -88,9 +93,15 @@ public class InitializeController {
         // Create categories
         Category simple = new Category();
         Category summer = new Category();
+        Category winter = new Category();
+        Category dessert = new Category();
+
 
         simple.setName("Simple");
         summer.setName("Summer");
+        winter.setName("Winter");
+        dessert.setName("Dessert");
+
 
         // Retrieve existing recipes
         List<Recipe> allRecipes = recipeRepository.findAll();
@@ -99,15 +110,18 @@ public class InitializeController {
         for (Recipe recipe : allRecipes) {
             recipe.getCategories().add(simple);
             recipe.getCategories().add(summer);
+            recipe.getCategories().add(dessert);
 
             // Optional: set inverse side
             simple.getRecipes().add(recipe);
             summer.getRecipes().add(recipe);
+            dessert.getRecipes().add(recipe);
         }
 
         // Save categories first (optional if cascading is enabled)
         categoryRepository.save(simple);
         categoryRepository.save(summer);
+        categoryRepository.save(dessert);
 
         // Save recipes (important — Recipe owns the relationship)
         recipeRepository.saveAll(allRecipes);

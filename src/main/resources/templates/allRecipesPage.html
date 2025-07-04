@@ -10,9 +10,9 @@
 <div class="container">
     <div class="row">
         <div class="col-2"></div>
-            <div class="col">
-                <h1 class="justify-content-end">Featured recipes</h1>
-            </div>
+        <div class="col">
+            <h1 class="justify-content-end">All recipes</h1>
+        </div>
     </div>
 </div>
 
@@ -30,12 +30,6 @@
             <ul sec:authorize="hasRole('ROLE_ADMIN')">
                 <li class="list-group-item">
                     <a th:href="@{/recipe/new}" class="btn action-btn">Add new recipe</a>
-                </li>
-                <li class="list-group-item">
-                    <a th:href="@{/category/new}" class="btn action-btn" data-bs-toggle="modal" data-bs-target="#editForm">Add category</a>
-                </li>
-                <li class="list-group-item">
-                    <a th:href="@{/ingredient/new}" class="btn action-btn" data-bs-toggle="modal" data-bs-target="#editFormIngredient">Add ingredient</a>
                 </li>
             </ul>
         </div>
