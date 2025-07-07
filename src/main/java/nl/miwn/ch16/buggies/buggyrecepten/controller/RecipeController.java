@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,9 @@ public class RecipeController {
                                 @ModelAttribute("formIngredient") Ingredient ingredientToBeMade,
                                 Model datamodel) {
         List<Recipe> allRecipes = recipeRepository.findAll();
+
+        Collections.shuffle(allRecipes);
+
         List<Recipe> topThreeRecipes = allRecipes.stream().limit(3).toList();
 
         datamodel.addAttribute("allRecipes", topThreeRecipes);
