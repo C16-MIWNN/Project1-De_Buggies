@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,13 +55,32 @@ public class RecipeController {
                                 Model datamodel) {
         List<Recipe> allRecipes = recipeRepository.findAll();
 
-        datamodel.addAttribute("allRecipes", recipeRepository.findAll());
+        Collections.shuffle(allRecipes);
+
+        List<Recipe> topThreeRecipes = allRecipes.stream().limit(3).toList();
+
+        datamodel.addAttribute("allRecipes", topThreeRecipes);
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", categoryToBeMade);
         datamodel.addAttribute("formIngredient", ingredientToBeMade);
         datamodel.addAttribute("formModalHidden", true);
 
         return "homePage";
+    }
+
+    @GetMapping({"/recipe/all-recipes"})
+    private String showAllRecipesPage(@ModelAttribute("formCategory") Category categoryToBeMade,
+                                @ModelAttribute("formIngredient") Ingredient ingredientToBeMade,
+                                Model datamodel) {
+        List<Recipe> allRecipes = recipeRepository.findAll();
+
+        datamodel.addAttribute("allRecipes", recipeRepository.findAll());
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
+        datamodel.addAttribute("formCategory", categoryToBeMade);
+        datamodel.addAttribute("formIngredient", ingredientToBeMade);
+        datamodel.addAttribute("formModalHidden", true);
+
+        return "allRecipesPage";
     }
 
     @GetMapping("/recipe/detail/{name}")
