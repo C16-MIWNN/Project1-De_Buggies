@@ -144,7 +144,7 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/save")
-    private String saveOrUpdateRecipe(@ModelAttribute("formDesign") Recipe recipeToBeSaved,
+    private String saveOrUpdateRecipe(@ModelAttribute("formRecipe") Recipe recipeToBeSaved,
                                       @RequestParam List<Long> categories,
                                       BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
@@ -156,8 +156,10 @@ public class RecipeController {
 
         recipeRepository.save(recipeToBeSaved);
 
-        return "redirect:/";
+        return "redirect:/recipe/all-recipes";
     }
+
+
 
     @GetMapping("/recipe/edit/{name}")
     private String editRecipe(@PathVariable("name") String name, Model datamodel) {

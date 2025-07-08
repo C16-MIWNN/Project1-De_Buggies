@@ -27,7 +27,6 @@ public class AdminUser {
     )
     private Set<Recipe> favoriteRecipes = new HashSet<>();
 
-
     public Long getAdminId() {
         return adminId;
     }
