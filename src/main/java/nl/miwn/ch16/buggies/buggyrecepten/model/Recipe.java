@@ -21,7 +21,11 @@ public class Recipe {
     private AdminUser creator;
 
     private List<String> recipeStepsList;
-    private List<String> ingredientsList;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<IngredientPerRecipe> ingredientPerRecipeList;
+
+
 
     @ManyToMany(mappedBy = "favoriteRecipes")
     private Set<AdminUser> favoritedByAdmins = new HashSet<>();
@@ -69,12 +73,12 @@ public class Recipe {
         this.recipeStepsList = recipeStepsList;
     }
 
-    public List<String> getIngredientsList() {
-        return ingredientsList;
+    public List<IngredientPerRecipe> getIngredientPerRecipeList() {
+        return ingredientPerRecipeList;
     }
 
-    public void setIngredientsList(List<String> ingredientsList) {
-        this.ingredientsList = ingredientsList;
+    public void setIngredientPerRecipeList(List<IngredientPerRecipe> ingredientPerRecipeList) {
+        this.ingredientPerRecipeList = ingredientPerRecipeList;
     }
 
     public AdminUser getCreator() {

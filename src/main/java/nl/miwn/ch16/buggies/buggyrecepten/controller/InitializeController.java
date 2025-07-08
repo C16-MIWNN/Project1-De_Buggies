@@ -76,15 +76,6 @@ public class InitializeController {
         pancakes.setRecipeStepsList(Arrays.asList("mix ingredients", "fry batter", "flip", "serve"));
         burger.setRecipeStepsList(Arrays.asList("grill patty", "toast bun", "assemble", "serve"));
 
-        eggs.setIngredientsList(Arrays.asList("water", "egg"));
-        toast.setIngredientsList(Arrays.asList("water", "bread"));
-        pasta.setIngredientsList(Arrays.asList("water", "spaghetti"));
-        applepie.setIngredientsList(Arrays.asList("apples", "sugar", "flour", "egg", "nutmeg", "cinnamon"));
-        salad.setIngredientsList(Arrays.asList("lettuce", "tomato", "cucumber", "olive oil", "lemon"));
-        soup.setIngredientsList(Arrays.asList("broth", "carrots", "onion", "celery"));
-        pancakes.setIngredientsList(Arrays.asList("flour", "milk", "egg", "sugar", "butter"));
-        burger.setIngredientsList(Arrays.asList("bun", "beef", "lettuce", "cheese", "tomato"));
-
         eggs.setCreator(adminUserRepository.findByName("Billy").get());
         toast.setCreator(adminUserRepository.findByName("Billy").get());
         pasta.setCreator(adminUserRepository.findByName("Billy").get());

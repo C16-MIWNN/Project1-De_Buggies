@@ -39,7 +39,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div th:replace="~{fragments/recipe :: recipeIngredientsCard(${recipeToBeShown.getIngredientsList()})}"></div>
+                        <div th:replace="~{fragments/recipe :: recipeIngredientsCard(${recipeToBeShown.getIngredientPerRecipeList()})}"></div>
                     </div>
                     <div class="col-md-8">
                         <div th:replace="~{fragments/recipe :: recipeStepsCard(${recipeToBeShown.getRecipeStepsList()})}"></div>

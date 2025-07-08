@@ -14,11 +14,12 @@ public class IngredientPerRecipe {
     @Id @GeneratedValue
     private Long ingredientPerRecipeId;
 
-    private double amount;
+    private String amount;
 
     private String unit;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipeId")
     private Recipe recipe;
 
     @ManyToOne
@@ -32,11 +33,11 @@ public class IngredientPerRecipe {
         this.ingredientPerRecipeId = ingredientPerRecipeId;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
