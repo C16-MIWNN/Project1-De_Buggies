@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * @author Marnix Ripke
+ * This program describes any user of the application
  */
 
 @Entity
