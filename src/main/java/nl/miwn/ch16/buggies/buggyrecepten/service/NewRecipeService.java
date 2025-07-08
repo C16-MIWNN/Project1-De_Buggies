@@ -2,8 +2,9 @@ package nl.miwn.ch16.buggies.buggyrecepten.service;
 
 import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,11 +17,11 @@ import java.util.Optional;
 @Service
 public class NewRecipeService {
     private final RecipeRepository recipeRepository;
-    private final AdminUserRepository adminUserRepository;
+    private final UserRepository userRepository;
 
-    public NewRecipeService(RecipeRepository recipeRepository, AdminUserRepository adminUserRepository) {
+    public NewRecipeService(RecipeRepository recipeRepository, UserRepository userRepository) {
         this.recipeRepository = recipeRepository;
-        this.adminUserRepository = adminUserRepository;
+        this.userRepository = userRepository;
     }
 
     public void saveRecipe(Recipe newRecipe) {
@@ -29,11 +30,11 @@ public class NewRecipeService {
 
     public void toggleFavorite(Long recipeId, String name) {
         Optional<Recipe> recipeToBeFavorited = recipeRepository.findById(recipeId);
-        Optional<AdminUser> userOpt = adminUserRepository.findByName(name);
+        Optional<User> userOpt = userRepository.findByName(name);
 
         if (recipeToBeFavorited.isPresent() && userOpt.isPresent()) {
             Recipe recipe = recipeToBeFavorited.get();
-            AdminUser user = userOpt.get();
+            User user = userOpt.get();
 
             if (user.getFavoriteRecipes().contains(recipe)) {
                 user.getFavoriteRecipes().remove(recipe);
@@ -41,7 +42,7 @@ public class NewRecipeService {
                 user.getFavoriteRecipes().add(recipe);
             }
 
-            adminUserRepository.save(user);
+           userRepository.save(user);
         }
     }
 }

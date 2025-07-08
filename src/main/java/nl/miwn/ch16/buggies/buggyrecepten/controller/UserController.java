@@ -1,7 +1,7 @@
 package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
-import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
+import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.service.CustomUserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -31,13 +31,13 @@ public class UserController {
 
     @GetMapping("/profile")
     public String userProfile(Model model) {
-        Optional<AdminUser> user = customUserDetailsService.getCurrentUser();
+        Optional<User> user = customUserDetailsService.getCurrentUser();
 
         if (user.isEmpty()) {
             return "redirect:/login";
         }
 
-        List<Recipe> favoriteRecipes = recipeRepository.findAllByFavoritedByAdminsContaining(user.get());
+        List<Recipe> favoriteRecipes = recipeRepository.findAllByFavoritedByUsersContaining(user.get());
 
         model.addAttribute("user", user.get());
         model.addAttribute("favoriteRecipe", favoriteRecipes);

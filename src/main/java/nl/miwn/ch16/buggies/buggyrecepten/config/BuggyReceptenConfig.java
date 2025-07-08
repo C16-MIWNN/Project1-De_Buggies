@@ -2,6 +2,7 @@ package nl.miwn.ch16.buggies.buggyrecepten.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,8 +22,10 @@ public class BuggyReceptenConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "/homePage","recipe/detail/{recipeId}").permitAll()
+                        .requestMatchers("/", "/homePage","recipe/detail/{recipeName}").permitAll()
                         .requestMatchers("/webjars/**", "/css/**", "/images/**").permitAll()
+                        .requestMatchers("/category/new").hasRole("ADMIN")
+                        .requestMatchers("recipe/new", "/recipe/edit/").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

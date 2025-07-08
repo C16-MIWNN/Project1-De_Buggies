@@ -4,11 +4,11 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 /**
-*@author Marnix Ripke
-* 
-*/
+ * @author Marnix Ripke
+ */
 
 @Entity
-@DiscriminatorValue("ADMIN")
-public class AdminUser extends User{
+@DiscriminatorValue("NORMAL")
+public class NormalUser extends User {
+
 }

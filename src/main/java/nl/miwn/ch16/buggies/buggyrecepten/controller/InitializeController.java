@@ -20,18 +20,18 @@ public class InitializeController {
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
-    private final AdminUserRepository adminUserRepository;
+    private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public InitializeController(IngredientRepository ingredientRepository,
                                 RecipeRepository recipeRepository,
                                 CategoryRepository categoryRepository,
-                                AdminUserRepository adminUserRepository) {
+                                UserRepository userRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
-        this.adminUserRepository = adminUserRepository;
+        this.userRepository = userRepository;
     }
 
     @EventListener
@@ -42,7 +42,7 @@ public class InitializeController {
     }
 
     private void initializeDB() {
-        loadAdminUsers();
+        loadUsers();
         loadRecipes();
         loadIngredients();
         loadCategories();
@@ -69,10 +69,10 @@ public class InitializeController {
         pasta.setIngredientsList(Arrays.asList("water", "spaghetti"));
         applepie.setIngredientsList(Arrays.asList("apples", "sugar", "flour", "egg", "nutmeg", "cinnamon"));
 
-        eggs.setCreator(adminUserRepository.findByName("Billy").get());
-        toast.setCreator(adminUserRepository.findByName("Billy").get());
-        pasta.setCreator(adminUserRepository.findByName("Billy").get());
-        applepie.setCreator(adminUserRepository.findByName("Harry").get());
+        eggs.setCreator(userRepository.findByName("Billy").get());
+        toast.setCreator(userRepository.findByName("Billy").get());
+        pasta.setCreator(userRepository.findByName("Billy").get());
+        applepie.setCreator(userRepository.findByName("Harry").get());
 
         recipeRepository.saveAll(List.of(eggs, toast, pasta, applepie));
     }
@@ -127,15 +127,15 @@ public class InitializeController {
         recipeRepository.saveAll(allRecipes);
     }
 
-    private void loadAdminUsers() {
+    private void loadUsers() {
         AdminUser billy = new AdminUser();
         billy.setName("Billy");
         billy.setPassword(encoder.encode("test123"));
 
-        AdminUser harry = new AdminUser();
+        NormalUser harry = new NormalUser();
         harry.setName("Harry");
         harry.setPassword(encoder.encode("test456"));
 
-        adminUserRepository.saveAll(List.of(billy, harry));
+        userRepository.saveAll(List.of(billy, harry));
     }
 }

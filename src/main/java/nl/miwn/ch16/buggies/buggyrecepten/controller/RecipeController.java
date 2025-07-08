@@ -6,13 +6,10 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
  */
 
 import jakarta.servlet.http.HttpServletRequest;
-import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.model.*;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.service.NewRecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,18 +26,18 @@ public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
     private final NewRecipeService newRecipeService;
-    private final AdminUserRepository adminUserRepository;
+    private final UserRepository userRepository;
 
 
     public RecipeController(RecipeRepository recipeRepository,
                             CategoryRepository categoryRepository,
                             NewRecipeService newRecipeService,
-                            AdminUserRepository adminUserRepository) {
+                            UserRepository userRepository) {
 
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.newRecipeService = newRecipeService;
-        this.adminUserRepository = adminUserRepository;
+        this.userRepository = userRepository;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe formRecipe) {
@@ -87,7 +84,7 @@ public class RecipeController {
     private String showRecipeDetails(@PathVariable("name") String name, Principal principal, Model datamodel) {
         Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
         String userName = principal.getName();
-        Optional<AdminUser> currentUser = adminUserRepository.findByName(userName);
+        Optional<User> currentUser = userRepository.findByName(userName);
 
         boolean recipeFavorited = false;
 
@@ -95,7 +92,7 @@ public class RecipeController {
         if (recipeOptional.isPresent()) {
 
             if (currentUser.isPresent()) {
-                if (recipeOptional.get().getFavoritedByAdmins().contains(currentUser.get())) {
+                if (recipeOptional.get().getFavoritedByUsers().contains(currentUser.get())) {
                     recipeFavorited = true;
                 }
             }
@@ -131,7 +128,7 @@ public class RecipeController {
 
     @GetMapping("/recipe/new")
     private String showNewRecipeForm(Model datamodel, Principal principal) {
-        Optional<AdminUser> currentUser = adminUserRepository.findByName(principal.getName());
+        Optional<User> currentUser = userRepository.findByName(principal.getName());
 
         Recipe formRecipe = new Recipe();
 
