@@ -15,6 +15,10 @@ import java.util.*;
 @DiscriminatorValue("NORMAL")
 public class NormalUser extends User {
 
+    public NormalUser() {
+        this.setRoles(Set.of("ROLE_NORMAL"));
+    }
+
     @ManyToMany
     @JoinTable(
             name = "normaluser_favorite_recipes",
@@ -25,7 +29,6 @@ public class NormalUser extends User {
 
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recipe> recipes = new ArrayList<>();
-
 
     public Set<Recipe> getFavoriteRecipes() {
         return favoriteRecipes;
@@ -41,35 +44,5 @@ public class NormalUser extends User {
 
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_NORMAL"));
-    }
-
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return super.isEnabled();
     }
 }
