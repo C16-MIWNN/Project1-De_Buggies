@@ -99,8 +99,6 @@
             containerField.appendChild(removeBtn);
             container.appendChild(containerField);
         }
-
-        return container.querySelectorAll('.input-group').length;
     }
 
     function updateFields(container, baseName, label) {
@@ -112,11 +110,9 @@
             if (labelSpan) {
                 labelSpan.innerText = `${label} ${index + 1}`;
             }
-
             if (inputs.length === 1) {
                 inputs[0].name = `${baseName}[${index}]`
             }
-
             if (inputs.length === 3) {
                 inputs[0].name = `${baseName}[${index}]`;
                 inputs[1].name = `amounts[${index}]`;

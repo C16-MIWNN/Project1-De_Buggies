@@ -44,7 +44,7 @@
         <div class="card-header card-recipeingredients-title">Ingredients</div>
         <div class="card-text">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" th:each="recipeIngredient : ${recipeIngredients}" th:text="|${recipeIngredient.ingredient.name} ${recipeIngredient.amount} ${recipeIngredient.unit}|"></li>
+                <li class="list-group-item" th:each="recipeIngredient : ${recipeIngredients}" th:text="|${recipeIngredient.amount} ${recipeIngredient.unit} ${recipeIngredient.ingredient.name}|"></li>
             </ul>
         </div>
     </div>

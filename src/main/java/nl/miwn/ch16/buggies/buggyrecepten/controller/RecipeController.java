@@ -73,8 +73,6 @@ public class RecipeController {
     private String showAllRecipesPage(@ModelAttribute("formCategory") Category categoryToBeMade,
                                 @ModelAttribute("formIngredient") Ingredient ingredientToBeMade,
                                 Model datamodel) {
-        List<Recipe> allRecipes = recipeRepository.findAll();
-
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
         datamodel.addAttribute("allCategories", categoryRepository.findAll());
         datamodel.addAttribute("formCategory", categoryToBeMade);
@@ -126,7 +124,6 @@ public class RecipeController {
 
     @PostMapping("/recipe/save")
     private String saveOrUpdateRecipeDTO(@ModelAttribute("formRecipe") NewRecipeDTO recipeToBeSaved,
-                                         @RequestParam List<Long> categories,
                                          BindingResult bindingResult,
                                          Principal principal){
         if (bindingResult.hasErrors()) {
@@ -147,7 +144,7 @@ public class RecipeController {
             Recipe recipe = recipeOptional.get();
             datamodel.addAttribute("formRecipe", recipe);
             datamodel.addAttribute("allCategories", categoryRepository.findAll());
-            return "recipeForm";
+            return "newRecipeForm";
         }
 
         return "redirect:/";
