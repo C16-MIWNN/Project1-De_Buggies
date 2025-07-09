@@ -53,28 +53,43 @@ public class InitializeController {
         Recipe toast = new Recipe();
         Recipe pasta = new Recipe();
         Recipe applepie = new Recipe();
+        Recipe salad = new Recipe();
+        Recipe soup = new Recipe();
+        Recipe pancakes = new Recipe();
+        Recipe burger = new Recipe();
 
         eggs.setName("Egg");
         toast.setName("Toast");
         pasta.setName("Pasta");
         applepie.setName("Apple pie");
+        salad.setName("Salad");
+        soup.setName("Soup");
+        pancakes.setName("Pancakes");
+        burger.setName("Burger");
 
         eggs.setRecipeStepsList(Arrays.asList("boil water", "cook egg"));
         toast.setRecipeStepsList(Arrays.asList("get bread", "toast bread"));
         pasta.setRecipeStepsList(Arrays.asList("boil water", "cook pasta"));
         applepie.setRecipeStepsList(Arrays.asList("make it", "bake it", "eat it"));
+        salad.setRecipeStepsList(Arrays.asList("chop veggies", "mix", "add dressing"));
+        soup.setRecipeStepsList(Arrays.asList("boil broth", "add vegetables", "simmer"));
+        pancakes.setRecipeStepsList(Arrays.asList("mix ingredients", "fry batter", "flip", "serve"));
+        burger.setRecipeStepsList(Arrays.asList("grill patty", "toast bun", "assemble", "serve"));
 
-        eggs.setIngredientsList(Arrays.asList("water", "egg"));
-        toast.setIngredientsList(Arrays.asList("water", "bread"));
-        pasta.setIngredientsList(Arrays.asList("water", "spaghetti"));
-        applepie.setIngredientsList(Arrays.asList("apples", "sugar", "flour", "egg", "nutmeg", "cinnamon"));
 
-        eggs.setCreator((NormalUser) userRepository.findByName("Harry").get());
-        toast.setCreator((NormalUser) userRepository.findByName("Linda").get());
-        pasta.setCreator((NormalUser) userRepository.findByName("John").get());
-        applepie.setCreator((NormalUser) userRepository.findByName("Peter").get());
+        eggs.setCreator(adminUserRepository.findByName("Harry").get());
+        toast.setCreator(adminUserRepository.findByName("Harry").get());
+        pasta.setCreator(adminUserRepository.findByName("Harry").get());
+        applepie.setCreator(adminUserRepository.findByName("Harry").get());
+        salad.setCreator(adminUserRepository.findByName("Harry").get());
+        soup.setCreator(adminUserRepository.findByName("Harry").get());
+        pancakes.setCreator(adminUserRepository.findByName("Harry").get());
+        burger.setCreator(adminUserRepository.findByName("Harry").get());
 
-        recipeRepository.saveAll(List.of(eggs, toast, pasta, applepie));
+        recipeRepository.saveAll(List.of(
+                eggs, toast, pasta, applepie, salad, soup, pancakes, burger
+        ));
+
     }
 
     private void loadIngredients() {
@@ -90,40 +105,46 @@ public class InitializeController {
     }
 
     private void loadCategories() {
-        // Create categories
         Category simple = new Category();
         Category summer = new Category();
         Category winter = new Category();
         Category dessert = new Category();
-
+        Category healthy = new Category();
+        Category comfort = new Category();
 
         simple.setName("Simple");
         summer.setName("Summer");
         winter.setName("Winter");
         dessert.setName("Dessert");
+        healthy.setName("Healthy");
+        comfort.setName("Comfort Food");
 
-
-        // Retrieve existing recipes
         List<Recipe> allRecipes = recipeRepository.findAll();
 
-        // Set relationships from owning side (Recipe)
         for (Recipe recipe : allRecipes) {
             recipe.getCategories().add(simple);
-            recipe.getCategories().add(summer);
-            recipe.getCategories().add(dessert);
 
-            // Optional: set inverse side
+            if (recipe.getName().equals("Apple pie") || recipe.getName().equals("Pancakes")) {
+                recipe.getCategories().add(dessert);
+                dessert.getRecipes().add(recipe);
+            }
+
+            if (recipe.getName().equals("Salad") || recipe.getName().equals("Soup")) {
+                recipe.getCategories().add(healthy);
+                healthy.getRecipes().add(recipe);
+            }
+
+            if (recipe.getName().equals("Burger") || recipe.getName().equals("Pasta")) {
+                recipe.getCategories().add(comfort);
+                comfort.getRecipes().add(recipe);
+            }
+
+            recipe.getCategories().add(summer); // All get summer for demo
             simple.getRecipes().add(recipe);
             summer.getRecipes().add(recipe);
-            dessert.getRecipes().add(recipe);
         }
 
-        // Save categories first (optional if cascading is enabled)
-        categoryRepository.save(simple);
-        categoryRepository.save(summer);
-        categoryRepository.save(dessert);
-
-        // Save recipes (important — Recipe owns the relationship)
+        categoryRepository.saveAll(List.of(simple, summer, winter, dessert, healthy, comfort));
         recipeRepository.saveAll(allRecipes);
     }
 

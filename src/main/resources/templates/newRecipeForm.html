@@ -14,11 +14,9 @@
             <div class="mb-2"></div>
             <h1 th:text="${name} ? 'Edit Recipe' : 'New Recipe Form'"></h1>
             <form th:action="@{/recipe/save}" method="post" th:object="${formRecipe}" id="recipeForm">
-                <input type="hidden" th:field="*{recipeId}" />
-                <input type="hidden" th:field="*{creator}" />
                 <div class="mb-4">
                     <h5>Recipe Name</h5>
-                    <input type="text" th:field="*{name}" class="form-control">
+                    <input type="text" th:field="*{recipeName}" class="form-control">
                 </div>
 
                 <div class="mb-4">
@@ -52,7 +50,7 @@
 <script>
     function ensureAtLeastOneField(containerId, baseName, typeName) {
         const container = document.getElementById(containerId);
-        const existingInputs = container.querySelectorAll('input');
+        const existingInputs = container.querySelectorAll('.input-group');
 
         if (existingInputs.length === 0) {
             const containerField = document.createElement('div');
@@ -77,42 +75,74 @@
                 container.removeChild(containerField);
                 ensureAtLeastOneField(containerId, baseName, typeName);
                 updateFields(container, baseName, typeName);
-
             });
 
             containerField.appendChild(text);
             containerField.appendChild(input);
+
+            if (typeName === 'Ingredient') {
+                const inputAmount = document.createElement('input');
+                const inputUnit = document.createElement('input');
+
+                inputAmount.type = 'text';
+                inputAmount.name = `amounts[0]`;
+                inputAmount.className = 'form-control';
+
+                inputUnit.type = 'text';
+                inputUnit.name = `units[0]`;
+                inputUnit.className = 'form-control';
+
+                containerField.appendChild(inputAmount);
+                containerField.appendChild(inputUnit);
+            }
+
             containerField.appendChild(removeBtn);
             container.appendChild(containerField);
         }
 
-        return container.querySelectorAll('input').length;
+        return container.querySelectorAll('.input-group').length;
     }
 
     function updateFields(container, baseName, label) {
-        container.querySelectorAll('input').forEach((input, index) => {
-            input.name = `${baseName}[${index}]`;
-            input.previousElementSibling.innerText = `${label} ${index + 1}`;
+        const groups = container.querySelectorAll('.input-group');
+        groups.forEach((group, index) => {
+            const inputs = group.querySelectorAll('input');
+            const labelSpan = group.querySelector('.input-group-text');
+
+            if (labelSpan) {
+                labelSpan.innerText = `${label} ${index + 1}`;
+            }
+
+            if (inputs.length === 1) {
+                inputs[0].name = `${baseName}[${index}]`
+            }
+
+            if (inputs.length === 3) {
+                inputs[0].name = `${baseName}[${index}]`;
+                inputs[1].name = `amounts[${index}]`;
+                inputs[2].name = `units[${index}]`;
+            }
         });
     }
 
-    let recipeStepCount = ensureAtLeastOneField('stepsContainer', 'recipeStepsList', 'Step', 0);
-    let ingredientCount = ensureAtLeastOneField('ingredientsContainer', 'ingredientsList', 'Ingredient', 0);
+    ensureAtLeastOneField('stepsContainer', 'recipeStepsList', 'Step');
 
     document.getElementById('addStep').addEventListener('click', function (e) {
         e.preventDefault();
         const container = document.getElementById('stepsContainer');
+        const index = container.querySelectorAll('.input-group').length;
+
         const input = document.createElement('input');
         const text = document.createElement('span');
         const containerField = document.createElement('div');
         const removeBtn = document.createElement('button');
 
         input.type = 'text';
-        input.name = `recipeStepsList[${recipeStepCount}]`;
+        input.name = `recipeStepsList[${index}]`;
         input.className = 'form-control';
 
         text.className = 'input-group-text';
-        text.innerText = `Step ${recipeStepCount + 1}`;
+        text.innerText = `Step ${index + 1}`;
 
         removeBtn.type = 'button';
         removeBtn.textContent = 'Remove';
@@ -120,9 +150,7 @@
 
         removeBtn.addEventListener('click', function () {
             container.removeChild(containerField);
-            ensureAtLeastOneField('stepsContainer', 'recipeStepsList', 'Step')
             updateFields(container, 'recipeStepsList', 'Step');
-            recipeStepCount--;
         });
 
         containerField.className = 'input-group mb-3';
@@ -131,25 +159,36 @@
         containerField.appendChild(removeBtn);
 
         container.appendChild(containerField);
-
-        recipeStepCount++;
     });
+
+    ensureAtLeastOneField('ingredientsContainer', 'ingredientsList', 'Ingredient');
 
     document.getElementById('addIngredient').addEventListener('click', function (e) {
         e.preventDefault();
         const container = document.getElementById('ingredientsContainer');
+        const index = container.querySelectorAll('.input-group').length;
+
         const containerField = document.createElement('div');
-        const input = document.createElement('input');
+        const inputIngredient = document.createElement('input');
+        const inputUnit = document.createElement('input');
+        const inputAmount = document.createElement('input');
         const text = document.createElement('span');
         const removeBtn = document.createElement('button');
 
-        input.type = 'text';
-        input.name = `ingredientsList[${ingredientCount}]`;
+        inputIngredient.type = 'text';
+        inputIngredient.name = `ingredientsList[${index}]`;
+        inputIngredient.className = 'form-control';
 
-        input.className = 'form-control';
+        inputAmount.type = 'text';
+        inputAmount.name = `amounts[${index}]`;
+        inputAmount.className = 'form-control';
+
+        inputUnit.type = 'text';
+        inputUnit.name = `units[${index}]`;
+        inputUnit.className = 'form-control';
 
         text.className = 'input-group-text';
-        text.innerText = `Ingredient ${ingredientCount + 1}`;
+        text.innerText = `Ingredient ${index + 1}`;
 
         removeBtn.type = 'button';
         removeBtn.textContent = 'Remove';
@@ -158,17 +197,17 @@
         removeBtn.addEventListener('click', function () {
             container.removeChild(containerField);
             updateFields(container, 'ingredientsList', 'Ingredient');
-            ingredientCount--;
         });
 
         containerField.className = 'input-group mb-3';
+
         containerField.appendChild(text);
-        containerField.appendChild(input);
+        containerField.appendChild(inputIngredient);
+        containerField.appendChild(inputAmount);
+        containerField.appendChild(inputUnit);
         containerField.appendChild(removeBtn);
 
         container.appendChild(containerField);
-
-        ingredientCount++;
     });
 </script>
 

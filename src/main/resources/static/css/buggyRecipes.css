@@ -202,6 +202,7 @@ a.delete-btn:hover {
 
 /*category button in cards*/
 a.category-btn {
+    text-overflow: ellipsis;
     color: white;
     font-size: 0.75rem;
     margin: 2px;
@@ -212,6 +213,7 @@ a.category-btn {
 }
 
 a.category-btn:hover, a.category-btn:focus {
+    text-overflow: ellipsis;
     background-color: #b3e2a6;
     color: #155d12;
     border: none;
@@ -224,6 +226,7 @@ a.category-btn:hover, a.category-btn:focus {
 }
 
 [data-bs-theme="dark"] a.category-btn {
+    text-overflow: ellipsis;
     background-color: #c9f3ba;
     color: #1f881e;
     font-size: 0.75rem;
@@ -235,6 +238,7 @@ a.category-btn:hover, a.category-btn:focus {
 }
 
 [data-bs-theme="dark"] a.category-btn:hover, a.category-btn:focus {
+    text-overflow: ellipsis;
     background-color: #b3e2a6;
     color: #155d12;
     font-size: 0.75rem;

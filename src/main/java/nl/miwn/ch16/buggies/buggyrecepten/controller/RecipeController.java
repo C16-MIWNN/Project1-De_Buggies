@@ -6,7 +6,12 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
  */
 
 import jakarta.servlet.http.HttpServletRequest;
-import nl.miwn.ch16.buggies.buggyrecepten.model.*;
+import nl.miwn.ch16.buggies.buggyrecepten.dto.NewRecipeDTO;
+import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
+import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
+import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
+import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
@@ -81,9 +86,29 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/detail/{name}")
-    private String showRecipeDetails(@PathVariable String name, Principal principal, Model datamodel) {
-        Optional<Recipe> recipeOpt = recipeRepository.findByName(name);
-        if (recipeOpt.isEmpty()) {
+
+    private String showRecipeDetails(@PathVariable("name") String name, Principal principal, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
+        String userName = principal.getName();
+        Optional<AdminUser> currentUser = adminUserRepository.findByName(userName);
+
+        boolean recipeFavorited = false;
+
+
+        if (recipeOptional.isPresent()) {
+
+            if (currentUser.isPresent()) {
+                if (recipeOptional.get().getFavoritedByAdmins().contains(currentUser.get())) {
+                    recipeFavorited = true;
+                }
+            }
+
+            Recipe recipe = recipeOptional.get();
+            datamodel.addAttribute("recipeToBeShown", recipe);
+            datamodel.addAttribute("recipeFavorited", recipeFavorited);
+
+            return setupRecipeDetail(datamodel, recipe);
+        } else {
             return "redirect:/homePage";
         }
 
@@ -96,6 +121,46 @@ public class RecipeController {
         datamodel.addAttribute("recipeToBeShown", recipe);
         datamodel.addAttribute("recipeFavorited", favorited);
         return setupRecipeDetail(datamodel, recipe);
+    }
+
+
+    @GetMapping("/recipe/new")
+    private String showNewRecipeDTOForm(Model datamodel) {
+        NewRecipeDTO formRecipe = new NewRecipeDTO();
+
+        datamodel.addAttribute("formRecipe", formRecipe);
+        datamodel.addAttribute("allCategories", categoryRepository.findAll());
+
+        return "newRecipeForm";
+    }
+
+    @PostMapping("/recipe/save")
+    private String saveOrUpdateRecipeDTO(@ModelAttribute("formRecipe") NewRecipeDTO recipeToBeSaved,
+                                         @RequestParam List<Long> categories,
+                                         BindingResult bindingResult,
+                                         Principal principal){
+        if (bindingResult.hasErrors()) {
+            System.err.println(bindingResult.getAllErrors());
+        }
+
+        Optional<AdminUser> creator = adminUserRepository.findByName(principal.getName());
+        creator.ifPresent(adminUser -> newRecipeService.saveRecipe(recipeToBeSaved, adminUser));
+
+        return "redirect:/recipe/all-recipes";
+    }
+
+    @GetMapping("/recipe/edit/{name}")
+    private String editRecipe(@PathVariable("name") String name, Model datamodel) {
+        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
+
+        if (recipeOptional.isPresent()) {
+            Recipe recipe = recipeOptional.get();
+            datamodel.addAttribute("formRecipe", recipe);
+            datamodel.addAttribute("allCategories", categoryRepository.findAll());
+            return "recipeForm";
+        }
+
+        return "redirect:/";
     }
 
     @PostMapping("/recipe/favorite")
@@ -114,51 +179,6 @@ public class RecipeController {
             String referer = request.getHeader("Referer");
             return "redirect:" + referer;
         }
-        return "redirect:/";
-    }
-
-
-    @GetMapping("/recipe/new")
-    private String showNewRecipeForm(Model datamodel, Principal principal) {
-        Optional<User> currentUser = userRepository.findByName(principal.getName());
-
-        Recipe formRecipe = new Recipe();
-
-        currentUser.ifPresent(formRecipe::setCreator);
-
-        datamodel.addAttribute("formRecipe", formRecipe);
-        datamodel.addAttribute("allCategories", categoryRepository.findAll());
-
-        return "recipeForm";
-    }
-
-    @PostMapping("/recipe/save")
-    private String saveOrUpdateRecipe(@ModelAttribute("formDesign") Recipe recipeToBeSaved,
-                                      @RequestParam List<Long> categories,
-                                      BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            System.err.println(bindingResult.getAllErrors());
-        }
-
-        List<Category> selectedCategories = categoryRepository.findAllById(categories);
-        recipeToBeSaved.setCategories(selectedCategories);
-
-        recipeRepository.save(recipeToBeSaved);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/recipe/edit/{name}")
-    private String editRecipe(@PathVariable("name") String name, Model datamodel) {
-        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
-
-        if (recipeOptional.isPresent()) {
-            Recipe recipe = recipeOptional.get();
-            datamodel.addAttribute("formRecipe", recipe);
-            datamodel.addAttribute("allCategories", categoryRepository.findAll());
-            return "recipeForm";
-        }
-
         return "redirect:/";
     }
 
