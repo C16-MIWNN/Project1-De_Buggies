@@ -87,16 +87,26 @@
             if (typeName === 'Ingredient') {
                 const inputAmount = document.createElement('input');
                 const inputUnit = document.createElement('input');
+                const textAmount = document.createElement('span');
+                const textUnit = document.createElement('span');
+
+                textAmount.className = 'input-group-text';
+                textAmount.innerText = `Amount`;
 
                 inputAmount.type = 'text';
                 inputAmount.name = `amounts[0]`;
                 inputAmount.className = 'form-control';
 
+                textUnit.className = 'input-group-text';
+                textUnit.innerText = `Unit`;
+
                 inputUnit.type = 'text';
                 inputUnit.name = `units[0]`;
                 inputUnit.className = 'form-control';
 
+                containerField.appendChild(textAmount);
                 containerField.appendChild(inputAmount);
+                containerField.appendChild(textUnit);
                 containerField.appendChild(inputUnit);
             }
 
@@ -173,6 +183,8 @@
         const inputUnit = document.createElement('input');
         const inputAmount = document.createElement('input');
         const text = document.createElement('span');
+        const textUnit = document.createElement('span');
+        const textAmount = document.createElement('span');
         const removeBtn = document.createElement('button');
 
         inputIngredient.type = 'text';
@@ -190,6 +202,12 @@
         text.className = 'input-group-text';
         text.innerText = `Ingredient ${index + 1}`;
 
+        textUnit.className = 'input-group-text';
+        textUnit.innerText = `Unit`;
+
+        textAmount.className = 'input-group-text';
+        textAmount.innerText = `Amount`;
+
         removeBtn.type = 'button';
         removeBtn.textContent = 'Remove';
         removeBtn.className = 'btn btn-outline-danger remove-button';
@@ -203,7 +221,9 @@
 
         containerField.appendChild(text);
         containerField.appendChild(inputIngredient);
+        containerField.appendChild(textAmount);
         containerField.appendChild(inputAmount);
+        containerField.appendChild(textUnit);
         containerField.appendChild(inputUnit);
         containerField.appendChild(removeBtn);
 
