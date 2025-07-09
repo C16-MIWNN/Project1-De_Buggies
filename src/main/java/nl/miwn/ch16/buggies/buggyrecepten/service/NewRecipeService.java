@@ -37,7 +37,7 @@ public class NewRecipeService {
         this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
     }
 
-    public void saveRecipe(NewRecipeDTO newRecipeDTO, AdminUser creator) {
+    public void saveRecipe(NewRecipeDTO newRecipeDTO, NormalUser creator) {
         Recipe newRecipe = new Recipe();
 
         newRecipe.setRecipeStepsList(newRecipeDTO.getRecipeStepsList());

@@ -7,11 +7,7 @@ package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import nl.miwn.ch16.buggies.buggyrecepten.dto.NewRecipeDTO;
-import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Category;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.model.*;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
@@ -84,11 +80,10 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/detail/{name}")
-
     private String showRecipeDetails(@PathVariable("name") String name, Principal principal, Model datamodel) {
         Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
         String userName = principal.getName();
-        Optional<AdminUser> currentUser = adminUserRepository.findByName(userName);
+        Optional<User> currentUser = userRepository.findByName(userName);
 
         boolean recipeFavorited = false;
 
@@ -96,7 +91,7 @@ public class RecipeController {
         if (recipeOptional.isPresent()) {
 
             if (currentUser.isPresent()) {
-                if (recipeOptional.get().getFavoritedByAdmins().contains(currentUser.get())) {
+                if (recipeOptional.get().getFavoritedByUsers().contains(currentUser.get())) {
                     recipeFavorited = true;
                 }
             }
@@ -109,18 +104,7 @@ public class RecipeController {
         } else {
             return "redirect:/homePage";
         }
-
-        Recipe recipe = recipeOpt.get();
-        Optional<User> userOpt = userRepository.findByName(principal.getName());
-        boolean favorited = userOpt
-                .map(user -> recipe.getFavoritedByUsers().contains(user))
-                .orElse(false);
-
-        datamodel.addAttribute("recipeToBeShown", recipe);
-        datamodel.addAttribute("recipeFavorited", favorited);
-        return setupRecipeDetail(datamodel, recipe);
     }
-
 
     @GetMapping("/recipe/new")
     private String showNewRecipeDTOForm(Model datamodel) {
@@ -140,8 +124,8 @@ public class RecipeController {
             System.err.println(bindingResult.getAllErrors());
         }
 
-        Optional<AdminUser> creator = adminUserRepository.findByName(principal.getName());
-        creator.ifPresent(adminUser -> newRecipeService.saveRecipe(recipeToBeSaved, adminUser));
+        Optional<User> creator = userRepository.findByName(principal.getName());
+        creator.ifPresent(User -> newRecipeService.saveRecipe(recipeToBeSaved, (NormalUser) User));
 
         return "redirect:/recipe/all-recipes";
     }

@@ -77,14 +77,14 @@ public class InitializeController {
         burger.setRecipeStepsList(Arrays.asList("grill patty", "toast bun", "assemble", "serve"));
 
 
-        eggs.setCreator(adminUserRepository.findByName("Harry").get());
-        toast.setCreator(adminUserRepository.findByName("Harry").get());
-        pasta.setCreator(adminUserRepository.findByName("Harry").get());
-        applepie.setCreator(adminUserRepository.findByName("Harry").get());
-        salad.setCreator(adminUserRepository.findByName("Harry").get());
-        soup.setCreator(adminUserRepository.findByName("Harry").get());
-        pancakes.setCreator(adminUserRepository.findByName("Harry").get());
-        burger.setCreator(adminUserRepository.findByName("Harry").get());
+        eggs.setCreator(userRepository.findByName("Harry").get());
+        toast.setCreator(userRepository.findByName("Harry").get());
+        pasta.setCreator(userRepository.findByName("Harry").get());
+        applepie.setCreator(userRepository.findByName("Harry").get());
+        salad.setCreator(userRepository.findByName("Harry").get());
+        soup.setCreator(userRepository.findByName("Harry").get());
+        pancakes.setCreator(userRepository.findByName("Harry").get());
+        burger.setCreator(userRepository.findByName("Harry").get());
 
         recipeRepository.saveAll(List.of(
                 eggs, toast, pasta, applepie, salad, soup, pancakes, burger
