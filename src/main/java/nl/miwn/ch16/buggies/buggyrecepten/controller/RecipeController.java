@@ -81,29 +81,21 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/detail/{name}")
-    private String showRecipeDetails(@PathVariable("name") String name, Principal principal, Model datamodel) {
-        Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
-        String userName = principal.getName();
-        Optional<User> currentUser = userRepository.findByName(userName);
-
-        boolean recipeFavorited = false;
-
-
-        if (recipeOptional.isPresent()) {
-
-            if (currentUser.isPresent()) {
-                if (recipeOptional.get().getFavoritedByUsers().contains(currentUser.get())) {
-                    recipeFavorited = true;
-                }
-            }
-
-            Recipe recipe = recipeOptional.get();
-            datamodel.addAttribute("recipeToBeShown", recipe);
-            datamodel.addAttribute("recipeFavorited", recipeFavorited);
-            return setupRecipeDetail(datamodel, recipe);
-        } else {
+    private String showRecipeDetails(@PathVariable String name, Principal principal, Model datamodel) {
+        Optional<Recipe> recipeOpt = recipeRepository.findByName(name);
+        if (recipeOpt.isEmpty()) {
             return "redirect:/homePage";
         }
+
+        Recipe recipe = recipeOpt.get();
+        Optional<User> userOpt = userRepository.findByName(principal.getName());
+        boolean favorited = userOpt
+                .map(user -> recipe.getFavoritedByUsers().contains(user))
+                .orElse(false);
+
+        datamodel.addAttribute("recipeToBeShown", recipe);
+        datamodel.addAttribute("recipeFavorited", favorited);
+        return setupRecipeDetail(datamodel, recipe);
     }
 
     @PostMapping("/recipe/favorite")
