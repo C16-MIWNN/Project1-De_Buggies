@@ -4,11 +4,13 @@ import nl.miwn.ch16.buggies.buggyrecepten.dto.NewRecipeDTO;
 import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
 import nl.miwn.ch16.buggies.buggyrecepten.model.IngredientPerRecipe;
+import nl.miwn.ch16.buggies.buggyrecepten.model.NormalUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientPerRecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -25,13 +27,13 @@ import java.util.Optional;
 public class NewRecipeService {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
-    private final AdminUserRepository adminUserRepository;
+    private final UserRepository userRepository;
     private final IngredientPerRecipeRepository ingredientPerRecipeRepository;
 
-    public NewRecipeService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, AdminUserRepository adminUserRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository) {
+    public NewRecipeService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, UserRepository userRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
-        this.adminUserRepository = adminUserRepository;
+        this.userRepository = userRepository;
         this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
     }
 
@@ -78,11 +80,11 @@ public class NewRecipeService {
 
     public void toggleFavorite(Long recipeId, String name) {
         Optional<Recipe> recipeToBeFavorited = recipeRepository.findById(recipeId);
-        Optional<AdminUser> userOpt = adminUserRepository.findByName(name);
+        Optional<User> userOpt = userRepository.findByName(name);
 
         if (recipeToBeFavorited.isPresent() && userOpt.isPresent()) {
             Recipe recipe = recipeToBeFavorited.get();
-            AdminUser user = userOpt.get();
+            NormalUser user = (NormalUser) userOpt.get();
 
             if (user.getFavoriteRecipes().contains(recipe)) {
                 user.getFavoriteRecipes().remove(recipe);
@@ -90,7 +92,7 @@ public class NewRecipeService {
                 user.getFavoriteRecipes().add(recipe);
             }
 
-            adminUserRepository.save(user);
+           userRepository.save(user);
         }
     }
 }

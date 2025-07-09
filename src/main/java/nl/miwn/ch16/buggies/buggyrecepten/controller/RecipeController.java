@@ -14,6 +14,7 @@ import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.AdminUserRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.CategoryRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.service.NewRecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,18 +31,18 @@ public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
     private final NewRecipeService newRecipeService;
-    private final AdminUserRepository adminUserRepository;
+    private final UserRepository userRepository;
 
 
     public RecipeController(RecipeRepository recipeRepository,
                             CategoryRepository categoryRepository,
                             NewRecipeService newRecipeService,
-                            AdminUserRepository adminUserRepository) {
+                            UserRepository userRepository) {
 
         this.recipeRepository = recipeRepository;
         this.categoryRepository = categoryRepository;
         this.newRecipeService = newRecipeService;
-        this.adminUserRepository = adminUserRepository;
+        this.userRepository = userRepository;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe formRecipe) {
@@ -85,6 +86,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/detail/{name}")
+
     private String showRecipeDetails(@PathVariable("name") String name, Principal principal, Model datamodel) {
         Optional<Recipe> recipeOptional = recipeRepository.findByName(name);
         String userName = principal.getName();
@@ -109,9 +111,17 @@ public class RecipeController {
         } else {
             return "redirect:/homePage";
         }
+
+        Recipe recipe = recipeOpt.get();
+        Optional<User> userOpt = userRepository.findByName(principal.getName());
+        boolean favorited = userOpt
+                .map(user -> recipe.getFavoritedByUsers().contains(user))
+                .orElse(false);
+
+        datamodel.addAttribute("recipeToBeShown", recipe);
+        datamodel.addAttribute("recipeFavorited", favorited);
+        return setupRecipeDetail(datamodel, recipe);
     }
-
-
 
 
     @GetMapping("/recipe/new")
