@@ -2,8 +2,11 @@ package nl.miwn.ch16.buggies.buggyrecepten.model;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Set;
+import java.util.Collection;
+import java.util.List;
 
 /**
 *@author Marnix Ripke
@@ -14,8 +17,9 @@ import java.util.Set;
 @DiscriminatorValue("ADMIN")
 public class AdminUser extends User{
 
-    public AdminUser() {
-        this.setRoles(Set.of("ROLE_ADMIN"));
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
 }

@@ -45,4 +45,10 @@ public class NormalUser extends User {
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_NORMAL"));
+    }
+
 }
