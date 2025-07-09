@@ -15,10 +15,6 @@ import java.util.*;
 @DiscriminatorValue("NORMAL")
 public class NormalUser extends User {
 
-    public NormalUser() {
-        this.setRoles(Set.of("ROLE_NORMAL"));
-    }
-
     @ManyToMany
     @JoinTable(
             name = "normaluser_favorite_recipes",
