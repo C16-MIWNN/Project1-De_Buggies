@@ -1,6 +1,5 @@
 package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
-import nl.miwn.ch16.buggies.buggyrecepten.model.NormalUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
