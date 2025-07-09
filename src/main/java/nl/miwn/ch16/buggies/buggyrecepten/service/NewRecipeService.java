@@ -1,81 +1,49 @@
 package nl.miwn.ch16.buggies.buggyrecepten.service;
 
 import nl.miwn.ch16.buggies.buggyrecepten.dto.NewRecipeDTO;
-import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
-import nl.miwn.ch16.buggies.buggyrecepten.model.Ingredient;
 import nl.miwn.ch16.buggies.buggyrecepten.model.IngredientPerRecipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.NormalUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientPerRecipeRepository;
-import nl.miwn.ch16.buggies.buggyrecepten.repositories.IngredientRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.service.Mapper.NewRecipeMapper;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /*
  * @Author: Joost Numan
- * zet hier wat het programma doet
+ * this is a service that connects the recipe controller to the new recipe DTO mapper
  */
 
 @Service
 public class NewRecipeService {
     private final RecipeRepository recipeRepository;
-    private final IngredientRepository ingredientRepository;
     private final UserRepository userRepository;
     private final IngredientPerRecipeRepository ingredientPerRecipeRepository;
+    private final NewRecipeMapper newRecipeMapper;
 
-    public NewRecipeService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, UserRepository userRepository, IngredientPerRecipeRepository ingredientPerRecipeRepository) {
+    public NewRecipeService(RecipeRepository recipeRepository,
+                            UserRepository userRepository,
+                            IngredientPerRecipeRepository ingredientPerRecipeRepository,
+                            NewRecipeMapper newRecipeMapper) {
         this.recipeRepository = recipeRepository;
-        this.ingredientRepository = ingredientRepository;
         this.userRepository = userRepository;
         this.ingredientPerRecipeRepository = ingredientPerRecipeRepository;
+        this.newRecipeMapper = newRecipeMapper;
     }
 
     public void saveRecipe(NewRecipeDTO newRecipeDTO, NormalUser creator) {
-        Recipe newRecipe = new Recipe();
+        Recipe recipe = newRecipeMapper.RecipeFromDTO(newRecipeDTO, creator);
+        List<IngredientPerRecipe> ingredients = newRecipeMapper.IngredientPerRecipeListFromDTO(newRecipeDTO, recipe);
 
-        newRecipe.setRecipeStepsList(newRecipeDTO.getRecipeStepsList());
-        newRecipe.setName(newRecipeDTO.getRecipeName());
-        newRecipe.setCategories(newRecipeDTO.getCategories());
-        newRecipe.setCreator(creator);
+        recipe.setIngredientPerRecipeList(ingredients);
 
-        recipeRepository.save(newRecipe);
-
-        List<IngredientPerRecipe> ingredientPerRecipeList = new ArrayList<>();
-
-        for (int index = 0; index < newRecipeDTO.getIngredientsList().size(); index++) {
-            String ingredientName = newRecipeDTO.getIngredientsList().get(index);
-            Ingredient ingredientEntity;
-
-            Optional<Ingredient> optionalIngredient = ingredientRepository.findByName(ingredientName);
-            if (optionalIngredient.isPresent()) {
-                ingredientEntity = optionalIngredient.get();
-            } else {
-                Ingredient newIngredient = new Ingredient();
-                newIngredient.setName(ingredientName);
-                ingredientEntity = ingredientRepository.save(newIngredient);
-            }
-
-            IngredientPerRecipe newIngredientPerRecipe = new IngredientPerRecipe();
-            newIngredientPerRecipe.setRecipe(newRecipe);
-            newIngredientPerRecipe.setUnit(newRecipeDTO.getUnits().get(index));
-            newIngredientPerRecipe.setAmount(newRecipeDTO.getAmounts().get(index));
-            newIngredientPerRecipe.setIngredient(ingredientEntity);
-
-            ingredientPerRecipeRepository.save(newIngredientPerRecipe);
-            ingredientPerRecipeList.add(newIngredientPerRecipe);
-
-        }
-
-        newRecipe.setIngredientPerRecipeList(ingredientPerRecipeList);
-
-        System.out.println(recipeRepository.findByName(newRecipe.getName()).get().getIngredientPerRecipeList());
+        recipeRepository.save(recipe);
+        ingredientPerRecipeRepository.saveAll(ingredients);
     }
 
     public void toggleFavorite(Long recipeId, String name) {

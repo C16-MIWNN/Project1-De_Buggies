@@ -6,7 +6,8 @@ import java.util.List;
 
 /*
  * @Author: Joost Numan
- * zet hier wat het programma doet
+ * describes an object that matches the form on the website for creating a new recipe and then sends that information
+ * to the service to create the correct model objects
  */
 
 public class NewRecipeDTO {
