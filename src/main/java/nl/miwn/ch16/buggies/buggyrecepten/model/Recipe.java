@@ -18,13 +18,14 @@ public class Recipe {
     private String name;
 
     @ManyToOne
-    private User creator;
+    @JoinColumn(name = "creator_normaluser_id", nullable = false)
+    private NormalUser creator;
 
     private List<String> recipeStepsList;
     private List<String> ingredientsList;
 
     @ManyToMany(mappedBy = "favoriteRecipes")
-    private Set<User> favoritedByUsers = new HashSet<>();
+    private Set<NormalUser> favoritedByUsers = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "recipe_category",
@@ -77,19 +78,19 @@ public class Recipe {
         this.ingredientsList = ingredientsList;
     }
 
-    public User getCreator() {
+    public NormalUser getCreator() {
         return creator;
     }
 
     public void setCreator(User creator) {
-        this.creator = creator;
+        this.creator = (NormalUser) creator;
     }
 
-    public Set<User> getFavoritedByUsers() {
+    public Set<NormalUser> getFavoritedByUsers() {
         return favoritedByUsers;
     }
 
-    public void setFavoritedByUsers(Set<User> favoritedByUsers) {
+    public void setFavoritedByUsers(Set<NormalUser> favoritedByUsers) {
         this.favoritedByUsers = favoritedByUsers;
     }
 }

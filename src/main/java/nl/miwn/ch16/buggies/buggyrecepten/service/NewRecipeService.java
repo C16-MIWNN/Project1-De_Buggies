@@ -1,6 +1,7 @@
 package nl.miwn.ch16.buggies.buggyrecepten.service;
 
 import nl.miwn.ch16.buggies.buggyrecepten.model.AdminUser;
+import nl.miwn.ch16.buggies.buggyrecepten.model.NormalUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
@@ -34,7 +35,7 @@ public class NewRecipeService {
 
         if (recipeToBeFavorited.isPresent() && userOpt.isPresent()) {
             Recipe recipe = recipeToBeFavorited.get();
-            User user = userOpt.get();
+            NormalUser user = (NormalUser) userOpt.get();
 
             if (user.getFavoriteRecipes().contains(recipe)) {
                 user.getFavoriteRecipes().remove(recipe);

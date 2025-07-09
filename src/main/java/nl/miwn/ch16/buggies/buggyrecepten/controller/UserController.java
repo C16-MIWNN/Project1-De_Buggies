@@ -1,12 +1,15 @@
 package nl.miwn.ch16.buggies.buggyrecepten.controller;
 
+import nl.miwn.ch16.buggies.buggyrecepten.model.NormalUser;
 import nl.miwn.ch16.buggies.buggyrecepten.model.Recipe;
 import nl.miwn.ch16.buggies.buggyrecepten.model.User;
 import nl.miwn.ch16.buggies.buggyrecepten.repositories.RecipeRepository;
+import nl.miwn.ch16.buggies.buggyrecepten.repositories.UserRepository;
 import nl.miwn.ch16.buggies.buggyrecepten.service.CustomUserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -23,10 +26,13 @@ public class UserController {
 
     private final RecipeRepository recipeRepository;
     private final CustomUserDetailsService customUserDetailsService;
+    private final UserRepository userRepository;
 
-    public UserController(RecipeRepository recipeRepository, CustomUserDetailsService customUserDetailsService) {
+    public UserController(RecipeRepository recipeRepository, CustomUserDetailsService customUserDetailsService,
+                          UserRepository userRepository) {
         this.recipeRepository = recipeRepository;
         this.customUserDetailsService = customUserDetailsService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/profile")
@@ -43,5 +49,20 @@ public class UserController {
         model.addAttribute("favoriteRecipe", favoriteRecipes);
 
         return "personalPage";
+    }
+
+    @GetMapping("/overview")
+    private String showAllUsersPage(Model datamodel) {
+        datamodel.addAttribute("allUsers", userRepository.findAll());
+
+        return "allUsersPage";
+    }
+
+    @GetMapping("/delete/{userId}")
+    private String deleteCourse(@PathVariable("userId") Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        user.ifPresent(userRepository::delete);
+
+        return "redirect:/user/overview";
     }
 }

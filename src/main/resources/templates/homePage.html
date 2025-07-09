@@ -28,13 +28,13 @@
         </div>
         <div class="col-2">
             <ul sec:authorize="hasAnyRole('ADMIN', 'NORMAL')">
-            <li class="list-group-item">
-                    <a th:href="@{/recipe/new}" class="btn action-btn edit-btn">Add new recipe</a>
-                </li>
+                <li class="list-group-item" sec:authorize="hasRole('NORMAL')">
+                        <a th:href="@{/recipe/new}" class="btn action-btn edit-btn">Add new recipe</a>
+                    </li>
                 <li class="list-group-item" sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{/category/new}" class="btn action-btn edit-btn" data-bs-toggle="modal" data-bs-target="#editForm">Add category</a>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" sec:authorize="hasRole('NORMAL')">
                     <a th:href="@{/ingredient/new}" class="btn action-btn edit-btn" data-bs-toggle="modal" data-bs-target="#editFormIngredient">Add ingredient</a>
                 </li>
             </ul>

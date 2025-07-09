@@ -22,11 +22,13 @@ public class BuggyReceptenConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "/homePage","recipe/detail/{recipeName}").permitAll()
+                        .requestMatchers("/", "/homePage","recipe/detail/{name}").permitAll()
                         .requestMatchers("/webjars/**", "/css/**", "/images/**").permitAll()
+                        .requestMatchers("/user/overview").hasRole("ADMIN")
+                        .requestMatchers("/user/delete/{userId}").hasRole("ADMIN")
                         .requestMatchers("/category/new").hasRole("ADMIN")
-                        .requestMatchers("recipe/new", "/recipe/edit/").authenticated()
-                        .anyRequest().authenticated()
+                        .requestMatchers("recipe/new", "/recipe/edit/").hasRole("NORMAL")
+                        .anyRequest().hasRole("NORMAL")
                 )
                 .formLogin(form -> form
                         .defaultSuccessUrl("/", true)

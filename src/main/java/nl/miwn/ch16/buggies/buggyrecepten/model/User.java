@@ -1,32 +1,26 @@
 package nl.miwn.ch16.buggies.buggyrecepten.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Marnix Ripke
+ * This is the abstract class of user. All other users in the application inherit from this class.
  */
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class User {
+public abstract class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     protected String name;
     protected String password;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_favorite_recipes",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "recipe_id")
-    )
-    private Set<Recipe> favoriteRecipes = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     protected Set<String> roles;
@@ -61,13 +55,5 @@ public abstract class User {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
-    }
-
-    public Set<Recipe> getFavoriteRecipes() {
-        return favoriteRecipes;
-    }
-
-    public void setFavoriteRecipes(Set<Recipe> favoriteRecipes) {
-        this.favoriteRecipes = favoriteRecipes;
     }
 }
