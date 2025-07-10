@@ -1,5 +1,6 @@
 package nl.miwn.ch16.buggies.buggyrecepten.config;
 
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,7 @@ public class BuggyReceptenConfig {
         return httpSecurity.build();
     }
 
-    private void onAuthenticationSuccess(
+    void onAuthenticationSuccess(
             HttpServletRequest request,
             HttpServletResponse response,
             Authentication authentication) throws IOException {
