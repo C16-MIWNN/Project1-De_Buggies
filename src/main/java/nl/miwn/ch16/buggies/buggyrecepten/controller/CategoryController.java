@@ -69,7 +69,7 @@ public class CategoryController {
         return "recipesPerCategory";
     }
 
-    private boolean isCategoryGiven(String category) {
+    public boolean isCategoryGiven(String category) {
         return category != null && !category.isEmpty();
     }
 
