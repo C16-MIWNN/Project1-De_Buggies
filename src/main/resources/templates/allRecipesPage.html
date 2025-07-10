@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="col-2">
-            <ul sec:authorize="hasRole('ROLE_ADMIN')">
+            <ul sec:authorize="hasAnyRole('ADMIN', 'NORMAL')">
                 <li class="list-group-item">
-                    <a th:href="@{/recipe/new}" class="btn action-btn edit-btn">Add new recipe</a>
+                    <a th:href="@{/recipe/new}" class="btn action-btn edit-btn w-100">Add new recipe</a>
                 </li>
             </ul>
         </div>
